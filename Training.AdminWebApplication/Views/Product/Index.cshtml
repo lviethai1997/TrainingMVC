@@ -1,0 +1,80 @@
+﻿@using Training.ViewModel.Common
+@model PageResult<Training.ViewModel.Catalog.ProductModel.ViewProductRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <h3> <a class="btn btn-default" asp-action="Create" asp-controller="Product">Tạo mới sản phẩm</a></h3>
+</p>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Danh sách sản phẩm</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Danh mục</th>
+                                <th>Giá cả</th>
+                                <th>Số lượng</th>
+                                <th>Lượt Xem</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        <img style="width:80px;height:100px" src=" @Html.DisplayFor(modelItem => item.Thunbar)" alt="@item.Name">
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryId)
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li>Giá bán: @Html.DisplayFor(modelItem => item.Price)</li>
+                                            <li>Giá nhập:@Html.DisplayFor(modelItem => item.PriceIn)</li>
+                                            <li>Giảm giá: @Html.DisplayFor(modelItem => item.Sale)</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ViewCount)
+                                    </td>
+                                    @* <td>
+                                        @Html.DisplayFor(modelItem => item.Hot)
+                                        </td>
+                                        <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                        </td>*@
+                                    <td>
+                                        <a href="/EditProduct.@item.Id" class="btn btn-primary">Cập nhật sản phẩm</a> |
+                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

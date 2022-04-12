@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Catalog\PostCategoryService\" />
+    <Folder Include="Catalog\PostService\" />
+  </ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Training.Data\Training.Data.csproj" />
+    <ProjectReference Include="..\Training.ViewModel\Training.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

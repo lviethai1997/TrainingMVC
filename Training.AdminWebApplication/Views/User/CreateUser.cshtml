@@ -1,0 +1,87 @@
+﻿@model Training.ViewModel.Catalog.UserModel.CreateUserRequest
+
+@{
+    ViewData["Title"] = "CreateUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tạo mới người dùng</h3>
+    </div>
+    <form class="form-horizontal" asp-action="CreateUser" asp-controller="User" method="post">
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Name">Họ và tên</label>
+                <div class="col-sm-9">
+                    <input type="text" asp-for="Name" class="form-control">
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Email">Địa chỉ Email</label>
+                <div class="col-sm-9">
+                    <input type="email" asp-for="Email" class="form-control">
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Phone">Số điện thoại</label>
+                <div class="col-sm-9">
+                    <input type="number" asp-for="Phone" class="form-control">
+                </div>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Address">Địa chỉ</label>
+                <div class="col-sm-9">
+                    <input type="text" asp-for="Address" class="form-control">
+                </div>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Username">Tên đăng nhập</label>
+                <div class="col-sm-9">
+                    <input type="text" asp-for="Username" class="form-control">
+                </div>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Password">Mật khẩu</label>
+                <div class="col-sm-9">
+                    <input type="password" asp-for="Password" class="form-control">
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Role">Quyền</label>
+                <div class="col-sm-9">
+                    <select asp-for="Role" class="form-control">
+                        <option selected value="0">Người Dùng</option>
+                        <option value="1">Admin</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="Status">Họ và tên</label>
+                <div class="col-sm-9">
+                    <select asp-for="Status" class="form-control">
+                        <option selected value="0">Mở khóa</option>
+                        <option value="1">Khóa</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="panel-footer text-left">
+            <button class="btn btn-info" type="submit">Tạo mới người dùng</button>
+        </div>
+    </form>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

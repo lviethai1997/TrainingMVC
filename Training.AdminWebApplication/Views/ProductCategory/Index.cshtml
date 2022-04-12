@@ -1,0 +1,72 @@
+﻿@using Training.ViewModel.Common;
+@model PageResult<Training.ViewModel.Catalog.ProductCategoryModel.ViewProductCategoryRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <h3> <a class="btn btn-default" asp-action="Create" asp-controller="ProductCategory" >Tạo mới danh mục sản phẩm</a></h3>
+</p>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Danh sách Danh mục sản phẩm</h3>
+            </div>
+
+            <!-- Striped Table -->
+            <!--===================================================-->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên danh mục</th>
+                                <th>Giảm giá</th>
+                                <th>Hạng mục</th>
+                                <th>Hiện ở trang chủ</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                var home = item.Show == 0 ? "Show At Home" : "Hide At Home";
+                                var status = item.Status == 0 ? "Show" : "Hide";
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SaleCate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ParentId)
+                                    </td>
+                                    <td>
+                                        <a href="/HomeProCate/@item.Id" class="btn btn-warning">@home</a>
+                                    </td>
+                                    <td>
+                                        <a href="/HideProCate/@item.Id" class="btn btn-warning">@status</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/EditProCate.@item.Id">Cập nhật</a>
+                            @*            <a href="/DelProCat/@item.Id"  class="btn btn-danger">Xóa danh mục</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--===================================================-->
+            <!-- End Striped Table -->
+        </div>
+    </div>
+</div>

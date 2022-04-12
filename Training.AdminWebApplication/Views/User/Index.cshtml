@@ -1,0 +1,75 @@
+﻿@using Training.ViewModel.Common
+
+@model PageResult<Training.ViewModel.Catalog.UserModel.ViewUserRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <h3> <a class="btn btn-default" href="/createUser">Tạo mới Người dùng</a></h3>
+</p>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Danh sách người dùng</h3>
+            </div>
+
+            <!-- Striped Table -->
+            <!--===================================================-->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ và tên</th>
+                                <th>SĐT</th>
+                                <th>Địa chỉ</th>
+                                <th>Chức Danh</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                var role = item.Role == 0 ? "Người Dùng" : "Admin";
+                                var status = item.Status == 0 ? "Khóa" : "Mở Khóa";
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Phone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => role )
+                                    </td>
+                                    <td>
+                                        <a href="/BlockUser/@item.Id" class="btn btn-warning">@status</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/UpdateUser.@item.Id">Cập nhật Tài khoản</a>
+                                        <a href="/DelUsr/@item.Id"  id="DeleteUsr" class="btn btn-danger">Xóa Tài khoản</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--===================================================-->
+            <!-- End Striped Table -->
+        </div>
+    </div>
+</div>
