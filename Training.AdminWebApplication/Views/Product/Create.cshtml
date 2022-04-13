@@ -7,11 +7,27 @@
 
 @section Scripts {
 <script>
-    ClassicEditor
-        .create( document.querySelector( '#content' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+        ClassicEditor
+            .create( document.querySelector( '#content' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+
+    function preview_image(value)
+    {
+       if(value=='one'){
+        var file = document.getElementById("upload_file").files.length;
+        $('#image_preview').html("<img src='"+URL.createObjectURL(event.target.files[0])+"' style='witdh:120px;height:120px'>");
+       }else{
+        var total_file= document.getElementById("upload_files").files.length;
+        if(total_file==0){
+            $('#image_preview').html();
+        }
+        for(var i=0;i<total_file;i++){
+        $('#images_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"' style='witdh:120px;height:120px'>");
+       }
+     }
+    }
 </script>
 }
 
@@ -32,14 +48,16 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" asp-for="Thunbar"></label>
                 <div class="col-sm-9">
-                    <input type="file" asp-for="Thunbar" class="form-control">
+                    <input type="file" asp-for="Thunbar" id="upload_file" onchange="preview_image('one')" class="form-control">
+                    <div id="image_preview"></div>
                 </div>
                 <span asp-validation-for="Thunbar" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" asp-for="Images"></label>
                 <div class="col-sm-9">
-                    <input type="file" asp-for="Images" multiple class="form-control">
+                    <input type="file" asp-for="Images" id="upload_files" onchange="preview_image('many');" multiple class="form-control">
+                    <div id="images_preview"></div>
                 </div>
                 <span asp-validation-for="Images" class="text-danger"></span>
             </div>
