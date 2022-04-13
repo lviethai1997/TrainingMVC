@@ -19,6 +19,8 @@ namespace Training.Service.Catalog.ProductService
 
         Task<Product> FindById(int id);
 
+        Task<bool> CountView(int id);
+
         Task<PageResult<ViewProductRequest>> GetAll();
     }
 }

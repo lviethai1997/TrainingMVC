@@ -1,0 +1,82 @@
+﻿@model Training.ViewModel.Catalog.ProductModel.UpdateProductRequest
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xóa sản phẩm</h2>
+
+<h3>Bạn có chắc chắn muốn xóa sản phẩm này?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShowThunbar)
+        </dt>
+        <dd>
+            <img src="@Model.ShowThunbar" alt="@Model.Name" style="width:100px;height:100px" />
+        </dd>
+         <dt>
+            @Html.DisplayNameFor(model => model.ShowImages)
+        </dt>
+        <dd>
+            @{
+                foreach(var item in @Model.ShowImages.Split(","))
+                {
+                    <img src="@item" alt="@Model.Name" style="width:100px;height:100px" />
+                }
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceIn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceIn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @{
+                string status = Model.Status == 0 ? "Đang hiển thị" : "Đang bị ẩn";
+            }
+            @Html.DisplayFor(model => status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Created_time)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Created_time)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated_time)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Updated_time)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Xóa" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

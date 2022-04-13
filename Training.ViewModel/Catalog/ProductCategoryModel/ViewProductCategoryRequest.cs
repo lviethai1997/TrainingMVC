@@ -12,6 +12,7 @@ namespace Training.ViewModel.Catalog.ProductCategoryModel
         public string Name { get; set; }
         public int SaleCate { get; set; }
         public int ParentId { get; set; }
+        public string ParentName { get; set; }
         public int Show { get; set; }
         public int Status { get; set; }
     }

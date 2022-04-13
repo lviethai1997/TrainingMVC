@@ -71,6 +71,7 @@ namespace Training.Service.Catalog.ProductCategoryService
                 Name = c.Name,
                 SaleCate = c.SaleCate,
                 ParentId = c.ParentId,
+                ParentName = c.ParentId==0?"Danh mục cha" : _context.ProductCategories.Where(c => c.ParentId == c.Id).Select(x => x.Name).FirstOrDefault(),
                 Show = c.Show,
                 Status = c.Status,
             }).ToListAsync();

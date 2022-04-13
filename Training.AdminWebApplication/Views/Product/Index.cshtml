@@ -1,4 +1,5 @@
 ﻿@using Training.ViewModel.Common
+@using System.Linq
 @model PageResult<Training.ViewModel.Catalog.ProductModel.ViewProductRequest>
 
 @{
@@ -43,7 +44,8 @@
                                         <img style="width:80px;height:100px" src=" @Html.DisplayFor(modelItem => item.Thunbar)" alt="@item.Name">
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CategoryId)
+
+                                        @Html.DisplayFor(modelItem => item.CategoryName)
                                     </td>
                                     <td>
                                         <ul>
@@ -66,8 +68,7 @@
                                         </td>*@
                                     <td>
                                         <a href="/EditProduct.@item.Id" class="btn btn-primary">Cập nhật sản phẩm</a> |
-                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                        @Html.ActionLink("Xóa sản phẩm", "Delete", new { id = item.Id },new{@class = "btn btn-danger"})
                                     </td>
                                 </tr>
                             }

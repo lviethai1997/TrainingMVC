@@ -85,11 +85,17 @@ namespace Training.Service.Catalog.ProductService
 
             if (request.Thunbar != null)
             {
+                await _storageService.DeleteFileAsync(findByid.Thunbar);
                 findByid.Thunbar = await this.SaveFile(request.Thunbar);
             }
 
             if (request.Images != null)
             {
+                foreach (var image in findByid.Images.Split(','))
+                {
+                    await _storageService.DeleteFileAsync(image);
+                }
+
                 string images = "";
                 foreach (var image in request.Images)
                 {
@@ -111,9 +117,33 @@ namespace Training.Service.Catalog.ProductService
             }
         }
 
-        public Task<PageActionResult> DeleteProduct(int id)
+        public async Task<PageActionResult> DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return new PageActionResult { IsSuccess = false, Message = "Sản phẩm không tồn tại!" };
+            }
+
+            await _storageService.DeleteFileAsync(product.Thunbar);
+
+            foreach (var item in product.Images.Split(","))
+            {
+                await _storageService.DeleteFileAsync(item);
+            }
+
+            _context.Products.Remove(product);
+            var result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return new PageActionResult { IsSuccess = true, Message = "Xóa sản phẩm thành công!" };
+            }
+            else
+            {
+                return new PageActionResult { IsSuccess = false, Message = "Xóa sản phẩm thất bại!" };
+            }
         }
 
         public Task<PageActionResult> HideProduct(int id)
@@ -156,6 +186,7 @@ namespace Training.Service.Catalog.ProductService
                 Sale = x.Sale,
                 Thunbar = x.Thunbar,
                 CategoryId = x.CategoryId,
+                CategoryName =  _context.ProductCategories.Where(c => c.Id == x.CategoryId).Select(c => c.Name).FirstOrDefault(),
                 Quantity = x.Quantity,
                 ViewCount = x.ViewCount,
                 Hot = x.Hot,
@@ -165,6 +196,24 @@ namespace Training.Service.Catalog.ProductService
             var actionResult = new PageActionResult { IsSuccess = true, Message = "OK" };
 
             return new PageResult<ViewProductRequest> { PageActionResult = actionResult, Items = products };
+        }
+
+        public async Task<bool> CountView(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            product.ViewCount += 1;
+            _context.Products.Update(product);
+            var result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

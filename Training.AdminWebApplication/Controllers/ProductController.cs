@@ -1,7 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Training.Service.Catalog.ProductCategoryService;
 using Training.Service.Catalog.ProductService;
 using Training.ViewModel.Catalog.ProductModel;
 
@@ -11,17 +13,20 @@ namespace Training.AdminWebApplication.Controllers
     {
         private readonly IProduct _product;
         private readonly INotyfService _notyfService;
+        private readonly IProductCategory _productCategory;
 
-        public ProductController(IProduct product, INotyfService notyfService)
+        public ProductController(IProduct product, INotyfService notyfService, IProductCategory productCategory)
         {
             _notyfService = notyfService;
             _product = product;
+            _productCategory = productCategory;
         }
 
         // GET: ProductController
-        [Route("/productList",Name = "productList")]
+        [Route("/productList", Name = "productList")]
         public async Task<ActionResult> Index()
         {
+            ViewBag.procate = LoadProCate();
             var products = await _product.GetAll();
             return View(products);
         }
@@ -33,9 +38,10 @@ namespace Training.AdminWebApplication.Controllers
         }
 
         // GET: ProductController/Create
-        [Route("/CreateProduct",Name = "CreateProduct")]
-        public ActionResult Create()
+        [Route("/CreateProduct", Name = "CreateProduct")]
+        public async Task<ActionResult> Create()
         {
+            ViewBag.procate = await LoadProCate();
             return View();
         }
 
@@ -44,15 +50,16 @@ namespace Training.AdminWebApplication.Controllers
         [Consumes("multipart/form-data")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([FromForm]CreateProductRequest collection)
+        public async Task<ActionResult> Create([FromForm] CreateProductRequest collection)
         {
             try
             {
+                ViewBag.procate = await LoadProCate();
                 if (!ModelState.IsValid)
                 {
                     return View(collection);
                 }
-
+               
                 var Create = await _product.CreateProduct(collection);
 
                 if (Create.IsSuccess == true)
@@ -76,6 +83,7 @@ namespace Training.AdminWebApplication.Controllers
         [Route("/EditProduct.{id}", Name = "EditProduct")]
         public async Task<ActionResult> Edit(int id)
         {
+            ViewBag.procate = await LoadProCate();
             var findById = await _product.FindById(id);
 
             var product = new UpdateProductRequest()
@@ -89,6 +97,8 @@ namespace Training.AdminWebApplication.Controllers
                 Quantity = findById.Quantity,
                 Hot = findById.Hot,
                 Status = findById.Status,
+                ShowImages = findById.Images,
+                ShowThunbar = findById.Thunbar,
             };
 
             return View(product);
@@ -103,6 +113,7 @@ namespace Training.AdminWebApplication.Controllers
         {
             try
             {
+                ViewBag.procate = await LoadProCate();
                 if (!ModelState.IsValid)
                 {
                     return View(collection);
@@ -128,24 +139,68 @@ namespace Training.AdminWebApplication.Controllers
         }
 
         // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var product = await _product.FindById(id);
+
+            var result = new UpdateProductRequest()
+            {
+                Name = product.Name,
+                Price = product.Price,
+                ShowThunbar = product.Thunbar,
+                ShowImages = product.Images,
+                PriceIn = product.PriceIn,
+                Quantity = product.Quantity,
+                Status = product.Status,
+                Created_time = product.Created_time,
+                Updated_time = product.Updated_time,
+            };
+            return View(result);
         }
 
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var delProduct = await _product.DeleteProduct(id);
+
+                if (delProduct.IsSuccess == true)
+                {
+                    _notyfService.Success(delProduct.Message);
+                }
+                else
+                {
+                    _notyfService.Error(delProduct.Message);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
             }
+        }
+
+        private async Task<List<object>> LoadProCate()
+        {
+            var procate = await _productCategory.GetAllProductCategories();
+
+            List<object> listProcate = new List<object>();
+
+            foreach (var proc in procate.Items)
+            {
+                listProcate.Add(new { value = proc.Id, name = proc.Name });
+            }
+
+            return listProcate;
         }
     }
 }
