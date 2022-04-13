@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Training.ViewModel.Common
 {
-    public class PageResult<T>
+    public class PageResult<T>: PagedResultBase
     {
         public PageActionResult PageActionResult { get; set; }
-        public IEnumerable<T> Items { get; set; }
+        public List<T> Items { get; set; }
     }
 }

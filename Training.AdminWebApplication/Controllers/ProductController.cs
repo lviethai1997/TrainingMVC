@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Training.Service.Catalog.ProductService;
 using Training.ViewModel.Catalog.ProductModel;
+using Training.ViewModel.Common;
 
 namespace Training.AdminWebApplication.Controllers
 {
@@ -19,9 +20,10 @@ namespace Training.AdminWebApplication.Controllers
         }
 
         // GET: ProductController
-        [Route("/productList",Name = "productList")]
+        [Route("/productList", Name = "productList")]
         public async Task<ActionResult> Index()
         {
+            ViewBag.procate = LoadProCate();
             var products = await _product.GetAll();
             return View(products);
         }

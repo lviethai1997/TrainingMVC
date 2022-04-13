@@ -4,4 +4,14 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Training.Data\Training.Data.csproj" />
+    <ProjectReference Include="..\Training.Service\Training.Service.csproj" />
+    <ProjectReference Include="..\Training.ViewModel\Training.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>

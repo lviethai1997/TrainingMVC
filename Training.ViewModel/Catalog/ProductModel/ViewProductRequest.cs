@@ -15,6 +15,7 @@ namespace Training.ViewModel.Catalog.ProductModel
         public decimal PriceIn { get; set; }
         public decimal Sale { get; set; }
         public string Thunbar { get; set; }
+        public string Images { get; set; }
         public int CategoryId { get; set; }
         public int Quantity { get; set; }
         public int? ViewCount { get; set; }

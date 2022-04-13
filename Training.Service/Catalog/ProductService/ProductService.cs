@@ -156,6 +156,7 @@ namespace Training.Service.Catalog.ProductService
                 Sale = x.Sale,
                 Thunbar = x.Thunbar,
                 CategoryId = x.CategoryId,
+                CategoryName =  _context.ProductCategories.Where(c => c.Id == x.CategoryId).Select(c => c.Name).FirstOrDefault(),
                 Quantity = x.Quantity,
                 ViewCount = x.ViewCount,
                 Hot = x.Hot,
@@ -165,6 +166,24 @@ namespace Training.Service.Catalog.ProductService
             var actionResult = new PageActionResult { IsSuccess = true, Message = "OK" };
 
             return new PageResult<ViewProductRequest> { PageActionResult = actionResult, Items = products };
+        }
+
+        public async Task<bool> CountView(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            product.ViewCount += 1;
+            _context.Products.Update(product);
+            var result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

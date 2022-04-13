@@ -20,5 +20,7 @@ namespace Training.Service.Catalog.ProductService
         Task<Product> FindById(int id);
 
         Task<PageResult<ViewProductRequest>> GetAll();
+
+        Task<PageResult<ViewProductRequest>> GetAllPaging(PagingRequest request);
     }
 }
