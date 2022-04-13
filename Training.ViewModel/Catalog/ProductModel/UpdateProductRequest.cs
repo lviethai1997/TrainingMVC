@@ -7,7 +7,7 @@ namespace Training.ViewModel.Catalog.ProductModel
 {
     public class UpdateProductRequest
     {
-        public DateTime Updated_time { get; set; }
+       
 
         [Display(Name = "Tên sản phẩm")]
         public string Name { get; set; }
@@ -33,13 +33,19 @@ namespace Training.ViewModel.Catalog.ProductModel
         [Display(Name = "Nội dung")]
         public string Content { get; set; }
 
-        [Display(Name = "Tên sản phẩm")]
+        [Display(Name = "Tồn kho")]
         public int Quantity { get; set; }
 
-        [Display(Name = "Tồn kho")]
+        [Display(Name = "Sản phẩm HOT")]
         public int Hot { get; set; }
 
         [Display(Name = "Trạng thái")]
         public int Status { get; set; }
+
+        public DateTime Updated_time { get; set; }
+
+        public string ThunbarNow { get; set; }
+        public string ImagesNow { get; set; }
+
     }
 }

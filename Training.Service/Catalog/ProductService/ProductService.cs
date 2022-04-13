@@ -185,5 +185,43 @@ namespace Training.Service.Catalog.ProductService
                 return false;
             }
         }
+
+        public async Task<PageResult<ViewProductRequest>> GetAllPaging(PagingRequest request)
+        {
+            var query = await _context.Products.Select(x => new ViewProductRequest()
+            {
+                Name = x.Name,
+                Id = x.Id,
+                Price = x.Price,
+                PriceIn = x.PriceIn,
+                Sale = x.Sale,
+                Thunbar = x.Thunbar,
+                CategoryId = x.CategoryId,
+                CategoryName = _context.ProductCategories.Where(c => c.Id == x.CategoryId).Select(c => c.Name).FirstOrDefault(),
+                Quantity = x.Quantity,
+                ViewCount = x.ViewCount,
+                Hot = x.Hot,
+                Status = x.Status,
+            }).ToListAsync();
+
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                query = query.Where(x => x.Name.Contains(request.Keyword) || x.Id.ToString().Contains(request.Keyword)).ToList();
+            }
+
+            var totalCount = query.Count();
+
+            var data = query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize);
+
+            var page = new PageResult<ViewProductRequest>
+            {
+                Items = data.ToList(),
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                TotalRecords = totalCount,
+            };
+
+            return page;
+        }
     }
 }

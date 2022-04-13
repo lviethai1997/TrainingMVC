@@ -1,7 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Training.Service.Catalog.ProductCategoryService;
 using Training.Service.Catalog.ProductService;
 using Training.ViewModel.Catalog.ProductModel;
 using Training.ViewModel.Common;
@@ -11,20 +13,28 @@ namespace Training.AdminWebApplication.Controllers
     public class ProductController : Controller
     {
         private readonly IProduct _product;
+        private readonly IProductCategory _productCategory;
         private readonly INotyfService _notyfService;
 
-        public ProductController(IProduct product, INotyfService notyfService)
+        public ProductController(IProduct product, INotyfService notyfService, IProductCategory productCategory)
         {
             _notyfService = notyfService;
+            _productCategory = productCategory;
             _product = product;
         }
 
         // GET: ProductController
         [Route("/productList", Name = "productList")]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int pageIndex = 1, int pageSize = 1, string keyword = null)
         {
-            ViewBag.procate = LoadProCate();
-            var products = await _product.GetAll();
+            var request = new PagingRequest()
+            {
+                PageSize = pageSize,
+                PageIndex = pageIndex,
+                Keyword = keyword
+            };
+
+            var products = await _product.GetAllPaging(request);
             return View(products);
         }
 
@@ -35,9 +45,10 @@ namespace Training.AdminWebApplication.Controllers
         }
 
         // GET: ProductController/Create
-        [Route("/CreateProduct",Name = "CreateProduct")]
-        public ActionResult Create()
+        [Route("/CreateProduct", Name = "CreateProduct")]
+        public  async Task<ActionResult> Create()
         {
+            ViewBag.listProCat = await ListProCate();
             return View();
         }
 
@@ -46,10 +57,11 @@ namespace Training.AdminWebApplication.Controllers
         [Consumes("multipart/form-data")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([FromForm]CreateProductRequest collection)
+        public async Task<ActionResult> Create([FromForm] CreateProductRequest collection)
         {
             try
             {
+                ViewBag.listProCat = await ListProCate();
                 if (!ModelState.IsValid)
                 {
                     return View(collection);
@@ -78,6 +90,7 @@ namespace Training.AdminWebApplication.Controllers
         [Route("/EditProduct.{id}", Name = "EditProduct")]
         public async Task<ActionResult> Edit(int id)
         {
+            ViewBag.listProCat = await ListProCate();
             var findById = await _product.FindById(id);
 
             var product = new UpdateProductRequest()
@@ -91,6 +104,8 @@ namespace Training.AdminWebApplication.Controllers
                 Quantity = findById.Quantity,
                 Hot = findById.Hot,
                 Status = findById.Status,
+                ThunbarNow = findById.Thunbar,
+                ImagesNow = findById.Images
             };
 
             return View(product);
@@ -105,6 +120,7 @@ namespace Training.AdminWebApplication.Controllers
         {
             try
             {
+                ViewBag.listProCat = await ListProCate();
                 if (!ModelState.IsValid)
                 {
                     return View(collection);
@@ -148,6 +164,19 @@ namespace Training.AdminWebApplication.Controllers
             {
                 return View();
             }
+        }
+
+        private async Task<IEnumerable<object>> ListProCate()
+        {
+            var procates = await _productCategory.GetAllProductCategories();
+
+            List<object> list = new List<object>();
+            foreach (var item in procates.Items)
+            {
+                list.Add(new { value = item.Id, name = item.Name });
+            }
+
+            return list;
         }
     }
 }
