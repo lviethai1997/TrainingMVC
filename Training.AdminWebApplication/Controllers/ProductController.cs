@@ -160,19 +160,36 @@ namespace Training.AdminWebApplication.Controllers
             }
         }
 
-        // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
+        [Route("/DeleteProduct.{id}",Name = "DeleteProduct")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var product =await _product.FindById(id);
+
+            var viewmodel = new UpdateProductRequest()
+            {
+                Name = product.Name,
+                Price = product.Price,
+                PriceIn = product.PriceIn,
+                Sale = product.Sale,
+                Quantity= product.Quantity,
+                Status= product.Status,
+                Updated_time = product.Updated_time,
+                ThunbarNow = product.Thunbar,
+                ImagesNow = product.Images
+            };
+
+            return View(viewmodel);
         }
 
-        // POST: ProductController/Delete/5
+        [Route("/DeleteProduct.{id}", Name = "DeleteProduct")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
+              
+
                 return RedirectToAction(nameof(Index));
             }
             catch

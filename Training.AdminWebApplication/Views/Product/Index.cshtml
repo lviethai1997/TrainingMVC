@@ -67,7 +67,7 @@
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                        <img style="width:80px;height:100px" src=" @Html.DisplayFor(modelItem => item.Thunbar)" alt="@item.Name">
+                                        <img style="width:120px;height:120px" src=" @Html.DisplayFor(modelItem => item.Thunbar)" alt="@item.Name">
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.CategoryName)
@@ -93,8 +93,7 @@
                                         </td>*@
                                     <td>
                                         <a href="/EditProduct.@item.Id" class="btn btn-primary">Cập nhật sản phẩm</a> |
-                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                        <a href="/DeleteProduct.@item.Id" class="btn btn-danger">Xóa sản phẩm</a>
                                     </td>
                                 </tr>
                             }

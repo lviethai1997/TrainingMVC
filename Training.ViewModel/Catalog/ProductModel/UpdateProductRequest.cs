@@ -43,8 +43,9 @@ namespace Training.ViewModel.Catalog.ProductModel
         public int Status { get; set; }
 
         public DateTime Updated_time { get; set; }
-
+        [Display(Name="Ảnh đại diện")]
         public string ThunbarNow { get; set; }
+        [Display(Name = "Hình ảnh")]
         public string ImagesNow { get; set; }
 
     }

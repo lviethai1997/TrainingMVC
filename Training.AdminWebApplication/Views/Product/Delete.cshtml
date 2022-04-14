@@ -1,0 +1,81 @@
+﻿@model Training.ViewModel.Catalog.ProductModel.UpdateProductRequest
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>UpdateProductRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+         <dt>
+            @Html.DisplayNameFor(model => model.ThunbarNow)
+        </dt>
+        <dd>
+            <img src="@Model.ThunbarNow" style="width:120px;height:120px" />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagesNow)
+        </dt>
+        <dd>
+            @{
+                foreach (var item in Model.ImagesNow.Split(","))
+                {
+                    <img src="@item" style="width:120px;height:120px" />
+                }
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceIn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceIn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sale)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sale)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated_time)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Updated_time)
+        </dd>
+       
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
