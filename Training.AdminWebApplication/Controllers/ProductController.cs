@@ -1,12 +1,14 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Training.Service.Catalog.ProductCategoryService;
 using Training.Service.Catalog.ProductService;
 using Training.ViewModel.Catalog.ProductModel;
 using Training.ViewModel.Common;
+using System.Linq;
 
 namespace Training.AdminWebApplication.Controllers
 {
@@ -25,13 +27,26 @@ namespace Training.AdminWebApplication.Controllers
 
         // GET: ProductController
         [Route("/productList", Name = "productList")]
-        public async Task<ActionResult> Index(int pageIndex = 1, int pageSize = 10, string keyword = null)
+        public async Task<ActionResult> Index(int pageIndex = 1, int pageSize = 10, string keyword = null, int? idCate = null)
         {
+
+            var getListProCate = await _productCategory.GetAllProductCategories();
+
+            ViewBag.listProCat = getListProCate.Items.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = idCate.HasValue && idCate.Value.ToString() == x.Id.ToString()
+            });
+
+            ViewBag.keyword = keyword;
+
             var request = new PagingRequest()
             {
                 PageSize = pageSize,
                 PageIndex = pageIndex,
-                Keyword = keyword
+                Keyword = keyword,
+                idCate = idCate
             };
 
             var products = await _product.GetAllPaging(request);
@@ -46,7 +61,7 @@ namespace Training.AdminWebApplication.Controllers
 
         // GET: ProductController/Create
         [Route("/CreateProduct", Name = "CreateProduct")]
-        public  async Task<ActionResult> Create()
+        public async Task<ActionResult> Create()
         {
             ViewBag.listProCat = await ListProCate();
             return View();

@@ -11,5 +11,6 @@ namespace Training.ViewModel.Common
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public string Keyword { get; set; }
+        public int? idCate { get; set; }
     }
 }

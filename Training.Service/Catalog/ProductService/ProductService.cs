@@ -156,7 +156,7 @@ namespace Training.Service.Catalog.ProductService
                 Sale = x.Sale,
                 Thunbar = x.Thunbar,
                 CategoryId = x.CategoryId,
-                CategoryName =  _context.ProductCategories.Where(c => c.Id == x.CategoryId).Select(c => c.Name).FirstOrDefault(),
+                CategoryName = _context.ProductCategories.Where(c => c.Id == x.CategoryId).Select(c => c.Name).FirstOrDefault(),
                 Quantity = x.Quantity,
                 ViewCount = x.ViewCount,
                 Hot = x.Hot,
@@ -206,7 +206,12 @@ namespace Training.Service.Catalog.ProductService
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
-                query = query.Where(x => x.Name.Contains(request.Keyword) || x.Id.ToString().Contains(request.Keyword)).ToList();
+                query = query.Where(x => x.Name.ToLower().Contains(request.Keyword.ToLower()) || x.Id.ToString().Contains(request.Keyword)).ToList();
+            }
+
+            if (request.idCate != null)
+            {
+                query = query.Where(x => x.CategoryId == Convert.ToInt32(request.idCate)).ToList();
             }
 
             var totalCount = query.Count();
