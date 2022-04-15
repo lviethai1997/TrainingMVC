@@ -165,7 +165,7 @@
                             foreach (var item in Model.Items)
                             {
                                 string[] arr = item.Images.Split(",");
-                                string urlCart = "/AddToCart/" + item.Id;
+                                string urlCart = "/Cart/AddtoCart?productId=" + item.Id + "&quantity=1";
                                 string urlWishList = "/AddToWishList/" + item.Id;
                                 string urlProductDetail = "/chi-tiet-san-pham/" + item.Name + "/" + item.Id;
 

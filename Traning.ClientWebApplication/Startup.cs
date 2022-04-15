@@ -1,18 +1,15 @@
 using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Training.Data.EF;
+using Training.Service.Catalog.CartService;
 using Training.Service.Catalog.ProductCategoryService;
 using Training.Service.Catalog.ProductService;
 using Training.Service.Catalog.UserService;
@@ -44,6 +41,7 @@ namespace Traning.ClientWebApplication
             services.AddTransient<IProduct, ProductService>();
             services.AddTransient<IProductCategory, ProductCategoryService>();
             services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<ICart, CartService>();
 
             IMvcBuilder build = services.AddRazorPages();
             build.AddRazorRuntimeCompilation();

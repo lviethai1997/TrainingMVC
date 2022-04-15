@@ -47,7 +47,7 @@
                 <!-- logo start -->
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <div class="logo">
-                        <a href="index.html"><img src="img/logo/logo.png" alt="" /></a>
+                        <a href="/trang-chu"><img src="img/logo/logo.png" alt="" /></a>
                     </div>
                 </div>
                 <!-- logo end -->
@@ -57,34 +57,34 @@
                         <div class="cart-total">
                             <ul>
                                 <li>
-                                    <a href="cart.html"><span class="cart-icon"><i class="fa fa-shopping-cart"></i></span> <span class="cart-no">2</span></a>
+                                    <a href="/gio-hang"><span class="cart-icon"><i class="fa fa-shopping-cart"></i></span> <span class="cart-no">@Enumerable.Count(ViewBag.CartItem.Items)</span></a>
                                     <div class="mini-cart-content">
-                                        <div class="cart-img-details">
-                                            <div class="cart-img-photo">
-                                                <a href="#"><img src="img/product/total-cart.jpg" alt="" /></a>
-                                                <span class="quantity">1</span>
-                                            </div>
-                                            <div class="cart-img-contaent">
-                                                <a href="#"><h4>Ornare sed consequat</h4></a>
-                                                <span>£515.00</span>
-                                            </div>
-                                            <div class="pro-del"><a href="#"><i class="fa fa-times-circle"></i></a></div>
-                                        </div>
+                                        @{
+                                            decimal subtotal = 0;
+
+                                            foreach (var item in ViewBag.CartItem.Items)
+                                            {
+                                                subtotal += item.priceProduct;
+                                                string urlCart = "/Cart/AddtoCart?productId=" + item.productId + "&quantity=1";
+                                                string urlProductDetail = "/chi-tiet-san-pham/" + item.productName + "/" + item.productId;
+
+                                                <div class="cart-img-details">
+                                                    <div class="cart-img-photo">
+                                                        <a href="@urlProductDetail"><img src="@(SystemString.AdminUrl+item.Images)" alt="" /></a>
+                                                        <span class="quantity">@item.quantityProduct</span>
+                                                    </div>
+                                                    <div class="cart-img-contaent">
+                                                        <a href="#"><h4>@item.productName</h4></a>
+                                                        <span>@item.priceProduct.ToString("N0")</span>
+                                                    </div>
+                                                    <div class="pro-del"><a href="/delProductInCart/@item.productId"><i class="fa fa-times-circle"></i></a></div>
+                                                </div>
+                                                <div class="clear"></div>
+                                            }
+                                        }
+                                        <p class="total">Tổng tiền: <span class="amount">@subtotal.ToString("N0")</span></p>
                                         <div class="clear"></div>
-                                        <div class="cart-img-details">
-                                            <div class="cart-img-photo">
-                                                <a href="#"><img src="img/product/total-cart2.jpg" alt="" /></a>
-                                                <span class="quantity">1</span>
-                                            </div>
-                                            <div class="cart-img-contaent">
-                                                <a href="#"><h4>Aenean eu tristique</h4></a>
-                                                <span>£70.00</span>
-                                            </div>
-                                            <div class="pro-del"><a href="#"><i class="fa fa-times-circle"></i></a></div>
-                                        </div>
-                                        <p class="total">Subtotal: <span class="amount">£585.00</span></p>
-                                        <div class="clear"></div>
-                                        <p class="cart-button-top"><a href="checkout.html">Checkout</a></p>
+                                        <p class="cart-button-top"><a href="/checkout">Checkout</a></p>
                                     </div>
                                 </li>
                             </ul>

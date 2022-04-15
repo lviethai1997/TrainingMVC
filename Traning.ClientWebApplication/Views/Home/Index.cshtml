@@ -147,7 +147,7 @@
                     foreach (var item in Model.FeaturedProducts)
                     {
                         string[] arr = item.Images.Split(",");
-                        string urlCart = "/AddToCart/" + item.Id;
+                        string urlCart = "/Cart/AddtoCart?productId=" + item.Id + "&quantity=1";
                         string urlWishList = "/AddToWishList/" + item.Id;
                         string urlProductDetail = "/chi-tiet-san-pham/" + item.Name + "/" + item.Id;
 
@@ -214,7 +214,7 @@
                     foreach (var item in Model.SaleProducts)
                     {
                         string[] arr = item.Images.Split(",");
-                        string urlCart = "/AddToCart/" + item.Id;
+                        string urlCart = "/Cart/AddtoCart?productId=" + item.Id + "&quantity=1";
                         string urlWishList = "/AddToWishList/" + item.Id;
                         string urlProductDetail = "/chi-tiet-san-pham/" + item.Name + "/" + item.Id;
 
@@ -295,7 +295,7 @@
                                             foreach (var item in Model.NewProducts)
                                             {
                                                 string[] arr = item.Images.Split(",");
-                                                string urlCart = "/AddToCart/" + item.Id;
+                                               string urlCart = "/Cart/AddtoCart?productId=" + item.Id + "&quantity=1";
                                                 string urlWishList = "/AddToWishList/" + item.Id;
                                                 string urlProductDetail = "/chi-tiet-san-pham/" + item.Name + "/" + item.Id;
 
@@ -354,7 +354,7 @@
                                             foreach (var item in Model.TopSaleProducts)
                                             {
                                                 string[] arr = item.Images.Split(",");
-                                                string urlCart = "/AddToCart/" + item.Id;
+                                                string urlCart = "/Cart/AddtoCart?productId=" + item.Id + "&quantity=1";
                                                 string urlWishList = "/AddToWishList/" + item.Id;
                                                 string urlProductDetail = "/chi-tiet-san-pham/" + item.Name + "/" + item.Id;
 
@@ -412,7 +412,7 @@
                                             foreach (var item in Model.TopViewProducts)
                                             {
                                                 string[] arr = item.Images.Split(",");
-                                                string urlCart = "/AddToCart/" + item.Id;
+                                              string urlCart = "/Cart/AddtoCart?productId=" + item.Id + "&quantity=1";
                                                 string urlWishList = "/AddToWishList/" + item.Id;
                                                 string urlProductDetail = "/chi-tiet-san-pham/" + item.Name + "/" + item.Id;
 
