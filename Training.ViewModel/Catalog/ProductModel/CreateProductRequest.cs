@@ -19,9 +19,11 @@ namespace Training.ViewModel.Catalog.ProductModel
         public decimal Sale { get; set; }
 
         [Display(Name = "Thunbar")]
+        [Required]
         public IFormFile Thunbar { get; set; }
 
         [Display(Name = "Hình ảnh")]
+        [Required]
         public IEnumerable<IFormFile> Images { get; set; }
 
         [Display(Name = "Danh mục")]

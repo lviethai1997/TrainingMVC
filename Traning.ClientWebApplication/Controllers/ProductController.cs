@@ -17,7 +17,7 @@ namespace Traning.ClientWebApplication.Controllers
         }
 
         [Route("/Category-{Name}/{CateId}")]
-        public async Task<IActionResult> ProductList(int CateId, int pageIndex = 1, int pageSize = 10, string keyword = null, int? idCate = null)
+        public async Task<IActionResult> ProductList(int CateId, int pageIndex = 1, int pageSize = 1, string keyword = null, int? idCate = null)
         {
             var request = new PagingRequest()
             {
@@ -26,7 +26,6 @@ namespace Traning.ClientWebApplication.Controllers
                 Keyword = keyword,
                 idCate = idCate
             };
-
             var products = await _product.GetProductByCategory(CateId, request);
 
             return View(products);
@@ -36,6 +35,7 @@ namespace Traning.ClientWebApplication.Controllers
         public async Task<IActionResult> ProductDetail(int id)
         {
             var product = await _product.FindById(id);
+            var countView = await _product.CountView(id);
             return View(product);
         }
     }

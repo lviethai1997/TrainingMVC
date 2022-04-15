@@ -282,9 +282,8 @@ namespace Training.Service.Catalog.ProductService
             }
             else
             {
-                getAll = getAll.Where(x => getParentId.Contains(x.p.CategoryId));
+                getAll = getAll.Where(x => getParentId.Contains(x.p.CategoryId) || x.p.CategoryId == CategoryId);
             }
-
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
@@ -323,6 +322,106 @@ namespace Training.Service.Catalog.ProductService
             };
 
             return page;
+        }
+
+        public async Task<IndexClientViewModel> GetIndexClientProducts()
+        {
+            var products = from product in _context.Products
+                           join category in _context.ProductCategories
+                           on product.CategoryId equals category.Id
+                           where product.Status == 0 && category.Status == 0 && product.Quantity > 0
+                           select (new { product, category });
+
+            var featuredProducts = await products.Where(x => x.product.Hot == 0).Take(10).OrderByDescending(x => x.product.Updated_time).Select(x => new ViewProductRequest
+            {
+                Id = x.product.Id,
+                Name = x.product.Name,
+                Price = x.product.Price,
+                Sale = x.product.Sale,
+                Thunbar = x.product.Thunbar,
+                Images = x.product.Images,
+                CategoryId = x.product.CategoryId,
+                CategoryName = x.category.Name,
+                Quantity = x.product.Quantity,
+                ViewCount = x.product.ViewCount,
+                Hot = x.product.Hot,
+                Status = x.product.Status
+            }).ToListAsync();
+
+            var saleProducts = await products.Where(x => x.product.Sale > 0).Take(10).OrderByDescending(x => x.product.Updated_time).OrderByDescending(x => x.product.Sale).Select(x => new ViewProductRequest
+            {
+                Id = x.product.Id,
+                Name = x.product.Name,
+                Price = x.product.Price,
+                Sale = x.product.Sale,
+                Thunbar = x.product.Thunbar,
+                Images = x.product.Images,
+                CategoryId = x.product.CategoryId,
+                CategoryName = x.category.Name,
+                Quantity = x.product.Quantity,
+                ViewCount = x.product.ViewCount,
+                Hot = x.product.Hot,
+                Status = x.product.Status
+            }).ToListAsync();
+
+            var newProducts = await products.Take(10).OrderByDescending(x => x.product.Updated_time).OrderByDescending(x => x.product.Id).Select(x => new ViewProductRequest
+            {
+                Id = x.product.Id,
+                Name = x.product.Name,
+                Price = x.product.Price,
+                Sale = x.product.Sale,
+                Thunbar = x.product.Thunbar,
+                Images = x.product.Images,
+                CategoryId = x.product.CategoryId,
+                CategoryName = x.category.Name,
+                Quantity = x.product.Quantity,
+                ViewCount = x.product.ViewCount,
+                Hot = x.product.Hot,
+                Status = x.product.Status
+            }).ToListAsync();
+
+            var topViewProducts = await products.Where(x => x.product.ViewCount > 0).Take(10).OrderByDescending(x => x.product.ViewCount).OrderByDescending(x => x.product.Updated_time).Select(x => new ViewProductRequest
+            {
+                Id = x.product.Id,
+                Name = x.product.Name,
+                Price = x.product.Price,
+                Sale = x.product.Sale,
+                Thunbar = x.product.Thunbar,
+                Images = x.product.Images,
+                CategoryId = x.product.CategoryId,
+                CategoryName = x.category.Name,
+                Quantity = x.product.Quantity,
+                ViewCount = x.product.ViewCount,
+                Hot = x.product.Hot,
+                Status = x.product.Status
+            }).ToListAsync();
+
+            var topSaleProducts = await products.Where(x => x.product.Sold > 0).Take(10).OrderByDescending(x => x.product.Sold).OrderByDescending(x => x.product.Updated_time).Select(x => new ViewProductRequest
+            {
+                Id = x.product.Id,
+                Name = x.product.Name,
+                Price = x.product.Price,
+                Sale = x.product.Sale,
+                Thunbar = x.product.Thunbar,
+                Images = x.product.Images,
+                CategoryId = x.product.CategoryId,
+                CategoryName = x.category.Name,
+                Quantity = x.product.Quantity,
+                ViewCount = x.product.ViewCount,
+                Hot = x.product.Hot,
+                Status = x.product.Status
+            }).ToListAsync();
+
+            var reuslt = new IndexClientViewModel()
+            {
+                TopSaleProducts = topSaleProducts,
+                TopViewProducts = topViewProducts,
+                FeaturedProducts = featuredProducts,
+                SaleProducts = saleProducts,
+                NewProducts = newProducts
+            };
+
+            return reuslt;
         }
     }
 }

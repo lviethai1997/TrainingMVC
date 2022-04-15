@@ -1,192 +1,210 @@
 ﻿
 <!doctype html>
 <html class="no-js" lang="">
-    
+
 <!-- Tieu Long Lanh -->
 <head>
-		<!-- Basic page needs
-		============================================ -->	
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Home page 5</title>
-        <meta name="description" content="">
-		
-		<!-- Mobile specific metas
-		============================================ -->		
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Basic page needs
+    ============================================ -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Home page 5</title>
+    <meta name="description" content="">
 
-		<!-- Font
-		============================================ -->
-		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>		
-		
-		<!-- Favicon
-		============================================ -->
-		<link rel="shortcut icon" type="/image/x-icon" href="img/favicon.ico">
+    <!-- Mobile specific metas
+    ============================================ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<!-- CSS  -->
-		
-		<!-- Bootstrap CSS
-		============================================ -->
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-		
-		<!-- owl.carousel CSS
-		============================================ -->
-        <link rel="stylesheet" href="/css/owl.carousel.css">	
-		
-		<!-- owl.theme CSS
-		============================================ -->
-        <link rel="stylesheet" href="/css/owl.theme.css">
+    <!-- Font
+    ============================================ -->
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
-		<!-- owl.transitions CSS
-		============================================ -->
-        <link rel="stylesheet" href="/css/owl.transitions.css">
-		
-		<!-- font-awesome CSS
-		============================================ -->
-        <link rel="stylesheet" href="/css/font-awesome.min.css">
-		
-		<!-- animate CSS
-		============================================ -->
-        <link rel="stylesheet" href="/css/animate.css">
-		
-		<!-- slicknav CSS
-		============================================ -->		
-        <link rel="stylesheet" href="/css/slicknav.css">
-		
-		<!-- rs-plugin CSS
-		============================================ -->			
-		<link href="/lib/rs-plugin/css/settings.css" rel="stylesheet" />			
-		
-		<!-- normalize CSS
-		============================================ -->		
-        <link rel="stylesheet" href="/css/normalize.css">
-		
-		<!-- home-5-color CSS
-		============================================ -->		
-        <link rel="stylesheet" href="/css/home-5-color.css">
-		
-		<!-- main CSS
-		============================================ -->		
-        <link rel="stylesheet" href="/css/main.css">
-		
-		<!-- style CSS
-		============================================ -->			
-        <link rel="stylesheet" href="/css/style.css">
-		
-		<!-- responsive CSS
-		============================================ -->			
-        <link rel="stylesheet" href="/css/responsive.css">
-		
-		<!-- modernizr js
-		============================================ -->		
-        <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body class="home-5">
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <!-- Favicon
+    ============================================ -->
+    <link rel="shortcut icon" type="/image/x-icon" href="img/favicon.ico">
 
-        <!-- Add your site or application content here -->
-   
-   <!-- header start -->    
-	@await Component.InvokeAsync("Header");
-	<!-- header end --> 
-	@RenderBody()
-	
-	@await Component.InvokeAsync("Footer");
-	
-	<!-- QUICKVIEW PRODUCT -->
-	<div id="quickview-wrapper">
-		<!-- Modal -->
-		<div class="modal fade" id="productModal" tabindex="-1" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					</div>
-					<div class="modal-body">
-						<div class="modal-product">
-							<div class="product-images">
-								<div class="main-image images">
-									<img alt="" src="img/product/13.jpg">
-								</div>
-							</div><!-- .product-images -->
-							
-							<div class="product-info">
-								<h1>Diam quis cursus</h1>
-								<div class="price-box">
-									<p class="price"><span class="special-price"><span class="amount">$132.00</span></span></p>
-								</div>
-								<a href="shop.html" class="see-all">See all features</a>
-								<div class="quick-add-to-cart">
-									<form method="post" class="cart">
-										<div class="numbers-row">
-											<input type="number" id="french-hens" value="3">
-										</div>
-										<button class="single_add_to_cart_button" type="submit">Add to cart</button>
-									</form>
-								</div>
-								<div class="quick-desc">
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.
-								</div>
-								<div class="social-sharing">
-									<div class="widget widget_socialsharing_widget">
-										<h3 class="widget-title-modal">Share this product</h3>
-										<ul class="social-icons">
-											<li><a target="_blank" title="Facebook" href="#" class="facebook social-icon"><i class="fa fa-facebook"></i></a></li>
-											<li><a target="_blank" title="Twitter" href="#" class="twitter social-icon"><i class="fa fa-twitter"></i></a></li>
-											<li><a target="_blank" title="Pinterest" href="#" class="pinterest social-icon"><i class="fa fa-pinterest"></i></a></li>
-											<li><a target="_blank" title="Google +" href="#" class="gplus social-icon"><i class="fa fa-google-plus"></i></a></li>
-											<li><a target="_blank" title="LinkedIn" href="#" class="linkedin social-icon"><i class="fa fa-linkedin"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div><!-- .product-info -->
-						</div><!-- .modal-product -->
-					</div><!-- .modal-body -->
-				</div><!-- .modal-content -->
-			</div><!-- .modal-dialog -->
-		</div>
-		<!-- END Modal -->
-	</div>
-	<!-- END QUICKVIEW PRODUCT -->		
-		
+    <!-- CSS  -->
+    <!-- Bootstrap CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-		<!-- JS -->
-		
-		<!-- jquery js -->
-		<script src="/js/vendor/jquery-1.11.2.min.js"></script>
-		
-		<!-- bootstrap js -->
-		<script src="/js/bootstrap.min.js"></script>
-		
-		<!-- owl.carousel.min js -->
-		<script src="/js/owl.carousel.min.js"></script>
-		
-		<!-- slicknav js -->
-		<script src="/js/jquery.slicknav.js"></script>
-		
-		<!-- countdown js -->
-		<script src="/js/jquery.countdown.min.js"></script>
+    <!-- owl.carousel CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/owl.carousel.css">
 
-		<!-- price-slider js -->
-		<script src="/js/price-slider.js"></script>
+    <!-- owl.theme CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/owl.theme.css">
 
-		<!-- jquery.scrollUp js -->
-		<script src="/js/jquery.scrollUp.min.js"></script>			
-		
-		<!-- Lib js -->		
-		<script src="/lib/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
-		<script src="/lib/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-		<script src="/lib/rs-plugin/rs.home.js"></script>		
-		
-		<!-- plugins js -->
-		<script src="/js/plugins.js"></script>
-		
-		<!-- main js -->
-		<script src="/js/main.js"></script>
-		
-    </body>
+    <!-- owl.transitions CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/owl.transitions.css">
+
+    <!-- font-awesome CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <!-- animate CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/animate.css">
+
+    <!-- slicknav CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/slicknav.css">
+
+    <!-- rs-plugin CSS
+    ============================================ -->
+    <link href="/lib/rs-plugin/css/settings.css" rel="stylesheet" />
+
+    <!-- normalize CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/normalize.css">
+
+    <!-- home-5-color CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/home-5-color.css">
+
+    <!-- main CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- style CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- responsive CSS
+    ============================================ -->
+    <link rel="stylesheet" href="/css/responsive.css">
+
+    <!-- modernizr js
+    ============================================ -->
+    <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+
+</head>
+<body class="home-5">
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Add your site or application content here -->
+    <!-- header start -->
+    @await Component.InvokeAsync("Header");
+    <!-- header end -->
+    @RenderBody()
+
+    @await Component.InvokeAsync("Footer");
+
+    <!-- QUICKVIEW PRODUCT -->
+    <div id="quickview-wrapper">
+        <!-- Modal -->
+        <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-product">
+                            <div class="product-images">
+                                <div class="main-image images">
+                                    <img alt="" src="img/product/13.jpg">
+                                </div>
+                            </div><!-- .product-images -->
+
+                            <div class="product-info">
+                                <h1>Diam quis cursus</h1>
+                                <div class="price-box">
+                                    <p class="price"><span class="special-price"><span class="amount">$132.00</span></span></p>
+                                </div>
+                                <a href="shop.html" class="see-all">See all features</a>
+                                <div class="quick-add-to-cart">
+                                    <form method="post" class="cart">
+                                        <div class="numbers-row">
+                                            <input type="number" id="french-hens" value="3">
+                                        </div>
+                                        <button class="single_add_to_cart_button" type="submit">Add to cart</button>
+                                    </form>
+                                </div>
+                                <div class="quick-desc">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.
+                                </div>
+                                <div class="social-sharing">
+                                    <div class="widget widget_socialsharing_widget">
+                                        <h3 class="widget-title-modal">Share this product</h3>
+                                        <ul class="social-icons">
+                                            <li><a target="_blank" title="Facebook" href="#" class="facebook social-icon"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a target="_blank" title="Twitter" href="#" class="twitter social-icon"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a target="_blank" title="Pinterest" href="#" class="pinterest social-icon"><i class="fa fa-pinterest"></i></a></li>
+                                            <li><a target="_blank" title="Google +" href="#" class="gplus social-icon"><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a target="_blank" title="LinkedIn" href="#" class="linkedin social-icon"><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div><!-- .product-info -->
+                        </div><!-- .modal-product -->
+                    </div><!-- .modal-body -->
+                </div><!-- .modal-content -->
+            </div><!-- .modal-dialog -->
+        </div>
+        <!-- END Modal -->
+    </div>
+    <!-- END QUICKVIEW PRODUCT -->
+    <!-- JS -->
+    <!-- jquery js -->
+    <script src="/js/vendor/jquery-1.11.2.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- owl.carousel.min js -->
+    <script src="/js/owl.carousel.min.js"></script>
+
+    <!-- slicknav js -->
+    <script src="/js/jquery.slicknav.js"></script>
+
+    <!-- countdown js -->
+    <script src="/js/jquery.countdown.min.js"></script>
+
+    <!-- price-slider js -->
+    <script src="/js/price-slider.js"></script>
+
+    <!-- jquery.scrollUp js -->
+    <script src="/js/jquery.scrollUp.min.js"></script>
+
+    <!-- Lib js -->
+    <script src="/lib/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script src="/lib/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/lib/rs-plugin/rs.home.js"></script>
+
+    <!-- plugins js -->
+    <script src="/js/plugins.js"></script>
+
+    <!-- main js -->
+    <script src="/js/main.js"></script>
+
+@*    <script type="text/javascript">
+         window.onbeforeunload = function () {
+            var scrollPos;
+            if (typeof window.pageYOffset != 'undefined') {
+                scrollPos = window.pageYOffset;
+            }
+            else if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
+                scrollPos = document.documentElement.scrollTop;
+            }
+            else if (typeof document.body != 'undefined') {
+                scrollPos = document.body.scrollTop;
+            }
+            document.cookie = "scrollTop=" + scrollPos;
+        }
+        window.onload = function () {
+            if (document.cookie.match(/scrollTop=([^;]+)(;|$)/) != null) {
+                var arr = document.cookie.match(/scrollTop=([^;]+)(;|$)/);
+                document.documentElement.scrollTop = parseInt(arr[1]);
+                document.body.scrollTop = parseInt(arr[1]);
+            }
+        }
+    </script>
+*@
+</body>
 
 <!-- Tieu Long Lanh -->
 </html>

@@ -26,5 +26,9 @@ namespace Training.Service.Catalog.ProductService
         Task<PageResult<ViewProductRequest>> GetAll();
 
         Task<PageResult<ViewProductRequest>> GetAllPaging(PagingRequest request);
+
+        Task<IndexClientViewModel> GetIndexClientProducts();
+
+        Task<bool> CountView(int id);
     }
 }

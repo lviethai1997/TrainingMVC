@@ -9,9 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.ViewModel", "Train
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.AdminWebApplication", "Training.AdminWebApplication\Training.AdminWebApplication.csproj", "{147623DA-4246-4B34-8458-41A01520BA4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traning.ClientWebApplication", "Traning.ClientWebApplication\Traning.ClientWebApplication.csproj", "{A255252E-9A27-4BC3-852D-B5283073875D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traning.ClientWebApplication", "Traning.ClientWebApplication\Traning.ClientWebApplication.csproj", "{A255252E-9A27-4BC3-852D-B5283073875D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Training.Service", "Training.Service\Training.Service.csproj", "{AC15E680-328C-4FAB-BF8B-155AA04A6DE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Service", "Training.Service\Training.Service.csproj", "{AC15E680-328C-4FAB-BF8B-155AA04A6DE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{62455D58-5947-4652-9BE2-2E960E68A78C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{81EC5B06-DC21-4B36-8BB1-863FFBE227AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{4E7961E4-CDC0-4E42-874F-E4FD6D151470}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +48,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8FE6801-2D10-45E7-B5FD-D5CA14A5B208} = {81EC5B06-DC21-4B36-8BB1-863FFBE227AE}
+		{266DDFD3-F328-4DAE-A425-2815842FFCA0} = {81EC5B06-DC21-4B36-8BB1-863FFBE227AE}
+		{147623DA-4246-4B34-8458-41A01520BA4B} = {62455D58-5947-4652-9BE2-2E960E68A78C}
+		{A255252E-9A27-4BC3-852D-B5283073875D} = {62455D58-5947-4652-9BE2-2E960E68A78C}
+		{AC15E680-328C-4FAB-BF8B-155AA04A6DE5} = {4E7961E4-CDC0-4E42-874F-E4FD6D151470}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19807C90-E693-481C-9C9F-1DA172BA9AB2}

@@ -16,6 +16,7 @@ namespace Training.Data.Entities
         public string Content { get; set; }
         public int Quantity { get; set; }
         public int? ViewCount { get; set; }
+        public int? Sold { get; set; }
         public int Hot { get; set; }
         public int Status { get; set; }
         public DateTime Created_time { get; set; }

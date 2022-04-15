@@ -73,6 +73,8 @@ namespace Traning.ClientWebApplication
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(name: "Home", pattern: "trang-chu", new { controller = "Home", action = "Index" });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
