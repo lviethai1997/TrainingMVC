@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -111,9 +112,28 @@ namespace Training.Service.Catalog.ProductService
             }
         }
 
-        public Task<PageActionResult> DeleteProduct(int id)
+        public async Task<PageActionResult> DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FindAsync(id);
+
+            await _storageService.DeleteFileAsync(product.Thunbar);
+
+            foreach (var item in product.Images.Split(","))
+            {
+                await _storageService.DeleteFileAsync(item);
+            }
+
+            _context.Remove(product);
+            var result = await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                return new PageActionResult { IsSuccess = true, Message = "Xoá sản phẩm thành công!" };
+            }
+            else
+            {
+                return new PageActionResult { IsSuccess = false, Message = "Xóa sản phẩm thất bại!" };
+            }
         }
 
         public Task<PageActionResult> HideProduct(int id)
@@ -224,6 +244,82 @@ namespace Training.Service.Catalog.ProductService
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
                 TotalRecords = totalCount,
+            };
+
+            return page;
+        }
+
+        public async Task<List<ViewProductRequest>> GetProductForClient()
+        {
+            var products = await _context.Products.Where(x => x.Status == 0).Select(x => new ViewProductRequest()
+            {
+                Name = x.Name,
+                Id = x.Id,
+                Images = x.Images,
+                Price = x.Price,
+                Sale = x.Sale,
+                Thunbar = x.Thunbar,
+                Quantity = x.Quantity,
+                Hot = x.Hot,
+            }).ToListAsync();
+
+            return products;
+        }
+
+        public async Task<PageResult<ViewProductRequest>> GetProductByCategory(int CategoryId, PagingRequest request)
+        {
+            var getAll = from p in _context.Products
+                         join cate in _context.ProductCategories
+                         on p.CategoryId equals cate.Id
+                         where p.Status == 0 && cate.Status == 0
+                         select new { p, cate };
+
+            var getParentId = await _context.ProductCategories.Where(x => x.ParentId == CategoryId).Select(x => x.Id).ToListAsync();
+
+            if (getParentId.Count == 0)
+            {
+                getAll = getAll.Where(x => x.cate.Id == CategoryId);
+            }
+            else
+            {
+                getAll = getAll.Where(x => getParentId.Contains(x.p.CategoryId));
+            }
+
+
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                getAll = getAll.Where(x => x.p.Name.ToLower().Contains(request.Keyword.ToLower()));
+            }
+
+            var totalCount = await getAll.CountAsync();
+
+            var data = await getAll.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).Select(x => new ViewProductRequest()
+            {
+                CategoryName = x.cate.Name,
+                CategoryId = x.cate.Id,
+                Name = x.p.Name,
+                Id = x.p.Id,
+                Images = x.p.Images,
+                Price = x.p.Price,
+                Sale = x.p.Sale,
+                Thunbar = x.p.Thunbar,
+                Quantity = x.p.Quantity,
+                Hot = x.p.Hot,
+            }).ToListAsync();
+
+            var result = new PageActionResult()
+            {
+                IsSuccess = true,
+                Message = "ok"
+            };
+
+            var page = new PageResult<ViewProductRequest>
+            {
+                Items = data,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                TotalRecords = totalCount,
+                PageActionResult = result
             };
 
             return page;

@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Training.Service.Catalog.ProductCategoryService;
 using Training.Service.Catalog.ProductService;
 using Training.ViewModel.Catalog.ProductModel;
 using Training.ViewModel.Common;
-using System.Linq;
 
 namespace Training.AdminWebApplication.Controllers
 {
@@ -29,7 +29,6 @@ namespace Training.AdminWebApplication.Controllers
         [Route("/productList", Name = "productList")]
         public async Task<ActionResult> Index(int pageIndex = 1, int pageSize = 10, string keyword = null, int? idCate = null)
         {
-
             var getListProCate = await _productCategory.GetAllProductCategories();
 
             ViewBag.listProCat = getListProCate.Items.Select(x => new SelectListItem()
@@ -160,10 +159,10 @@ namespace Training.AdminWebApplication.Controllers
             }
         }
 
-        [Route("/DeleteProduct.{id}",Name = "DeleteProduct")]
+        [Route("/DeleteProduct.{id}", Name = "DeleteProduct")]
         public async Task<IActionResult> Delete(int id)
         {
-            var product =await _product.FindById(id);
+            var product = await _product.FindById(id);
 
             var viewmodel = new UpdateProductRequest()
             {
@@ -171,8 +170,8 @@ namespace Training.AdminWebApplication.Controllers
                 Price = product.Price,
                 PriceIn = product.PriceIn,
                 Sale = product.Sale,
-                Quantity= product.Quantity,
-                Status= product.Status,
+                Quantity = product.Quantity,
+                Status = product.Status,
                 Updated_time = product.Updated_time,
                 ThunbarNow = product.Thunbar,
                 ImagesNow = product.Images
@@ -184,13 +183,21 @@ namespace Training.AdminWebApplication.Controllers
         [Route("/DeleteProduct.{id}", Name = "DeleteProduct")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
-              
-
-                return RedirectToAction(nameof(Index));
+                var delete = await _product.DeleteProduct(id);
+                if (delete.IsSuccess == true)
+                {
+                    _notyfService.Success(delete.Message);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    _notyfService.Error(delete.Message);
+                    return View();
+                }
             }
             catch
             {

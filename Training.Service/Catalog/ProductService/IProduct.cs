@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Training.Data.Entities;
 using Training.ViewModel.Catalog.ProductModel;
 using Training.ViewModel.Common;
@@ -8,6 +9,9 @@ namespace Training.Service.Catalog.ProductService
     public interface IProduct
     {
         Task<PageActionResult> CreateProduct(CreateProductRequest request);
+
+        Task<List<ViewProductRequest>> GetProductForClient();
+        Task<PageResult<ViewProductRequest>> GetProductByCategory(int CategoryId, PagingRequest request);
 
         Task<PageActionResult> UpdateProduct(int id, UpdateProductRequest request);
 

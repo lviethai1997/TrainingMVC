@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Training.Data.EF;
 using Training.Data.Entities;
 using Training.ViewModel.Catalog.ProductCategoryModel;
 using Training.ViewModel.Common;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace Training.Service.Catalog.ProductCategoryService
 {
@@ -73,6 +74,7 @@ namespace Training.Service.Catalog.ProductCategoryService
                 ParentId = c.ParentId,
                 Show = c.Show,
                 Status = c.Status,
+                ParentName = c.ParentId == 0 ? "Danh mục cha" : _context.ProductCategories.Where(x => x.Id == c.ParentId).Select(x => x.Name).FirstOrDefault()
             }).ToListAsync();
 
             var actionResult = new PageActionResult { IsSuccess = true, Message = "OK" };
@@ -90,7 +92,6 @@ namespace Training.Service.Catalog.ProductCategoryService
             }
 
             return getById;
-
         }
 
         public async Task<PageActionResult> HideProductCategory(int pCateId)
@@ -118,7 +119,6 @@ namespace Training.Service.Catalog.ProductCategoryService
             {
                 return new PageActionResult { IsSuccess = false, Message = "Có lỗi đã xảy ra, vui lòng thử lại!" };
             }
-
         }
 
         public async Task<PageActionResult> ShowAtHome(int pCateId)
@@ -146,6 +146,19 @@ namespace Training.Service.Catalog.ProductCategoryService
             {
                 return new PageActionResult { IsSuccess = false, Message = "Có lỗi đã xảy ra, vui lòng thử lại!" };
             }
+        }
+
+        public async Task<List<ViewProductCategoryRequest>> GetCateClient()
+        {
+            var categories = await _context.ProductCategories.Where(x => x.Status == 0).Select(x => new ViewProductCategoryRequest()
+            {
+                Id= x.Id,
+                Name = x.Name,
+                SaleCate = x.SaleCate,
+                ParentId = x.ParentId,
+            }).ToListAsync();
+
+            return categories;
         }
 
         public async Task<PageActionResult> UpdateProductCategory(int pCateId, UpdateProductCategoryRequest request)

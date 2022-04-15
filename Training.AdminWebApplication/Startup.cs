@@ -36,7 +36,7 @@ namespace Training.AdminWebApplication
             services.AddNotyf(config => { config.DurationInSeconds = 3; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
             services.AddRazorPages();
             services.AddDbContext<TrainingDbContext>(options =>
-                        options.UseSqlServer("Server=.;Database=TraningDb;Trusted_Connection=True;"));
+                        options.UseSqlServer(Data.SystemConfig.SystemString.SQLconnection));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserService, UserService>();

@@ -20,7 +20,7 @@ namespace Training.Service.Common
 
         public async Task DeleteFileAsync(string fileName)
         {
-            var filePath = Path.Combine(_userContentFolder, fileName);
+            var filePath = Path.Combine(_userContentFolder, fileName.Replace($"/{USER_CONTENT_FOLDER_NAME}/", ""));
             if (File.Exists(filePath))
             {
                 await Task.Run(() => File.Delete(filePath));
