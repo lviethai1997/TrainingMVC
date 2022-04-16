@@ -137,31 +137,32 @@
 
 @section Scripts{
 <script>
-     $(".dataCart").keyup(function(event){
-         event.preventDefault();
-     let productId = $(".product-quantity").find(this).attr("data-id");
-    let quantity = $(".product-quantity").find(this).val();
-    let subtotal = $("#subtotal-"+productId).html();
-    let price = $("#price-"+productId).html();
+    $(".dataCart").keyup(function(){
+           UpdateCart(this);
+    })
 
+     $(".dataCart").change(function(){
+           UpdateCart(this);
+    })
 
+    function UpdateCart(val){
+       let productId = $(".product-quantity").find(val).attr("data-id");
+       let quantity = $(".product-quantity").find(val).val();
+       let subtotal = $("#subtotal-"+productId).html();
+       let price = $("#price-"+productId).html();
+       console.log(productId)
 
-    console.log(quantity)
+    if(productId >0 && quantity > 0){
+        $("#subtotal-"+productId).html((parseFloat(quantity)*parseFloat(price)).toLocaleString())
 
-     if(productId >0 && quantity > 0){
-         $("#subtotal-"+productId).html((parseFloat(quantity)*parseFloat(price)).toLocaleString())
-
-          $.ajax({
-         method:"POST",
-         url: "/updateCart",
-         data : {
-             productId :productId,
-             quantity:quantity
-         },
-     })
-     }
-
-     })
+         $.ajax({
+        method:"POST",
+        url: "/updateCart",
+        data : {
+            productId :productId,
+            quantity:quantity
+        }
+    })}}
 
 </script>
 }
