@@ -86,28 +86,18 @@ namespace Training.Service.Catalog.CartService
             }
         }
 
-        public async Task<PageActionResult> EditToCart(EditCartRequest request)
+        public async Task<PageActionResult> EditToCart(int productId, int quantity, int userId)
         {
-            var getCarsUser = await _context.Carts.Where(x => x.UserId == request.userId).ToListAsync();
+            var getCarsUser = await _context.Carts.Where(x => x.UserId == userId && x.ProductId == productId).FirstOrDefaultAsync();
 
             if (getCarsUser == null)
             {
                 return new PageActionResult { IsSuccess = false, Message = "Không có sản phẩm nào trong giỏ hàng" };
             }
 
-            foreach (var item in getCarsUser)
-            {
-                foreach (var itemCart in request.Carts)
-                {
-                    if (item.ProductId == itemCart.ProductId)
-                    {
-                        item.QuantityProduct = itemCart.QuantityProduct;
-                        item.Updated_time = DateTime.Now;
-                    }
-                }
-            }
+            getCarsUser.QuantityProduct = quantity;
 
-            _context.Carts.UpdateRange(getCarsUser);
+            _context.Carts.Update(getCarsUser);
             var result = await _context.SaveChangesAsync();
 
             if (result > 0)

@@ -1,8 +1,10 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Training.Service.Catalog.CartService;
 using Training.ViewModel.Catalog.CartModel;
+using Newtonsoft.Json;
 
 namespace Traning.ClientWebApplication.Controllers
 {
@@ -48,11 +50,12 @@ namespace Traning.ClientWebApplication.Controllers
             }
         }
 
-
+        [Route("updateCart", Name = "updateCart")]
         [HttpPost]
-        public async Task<IActionResult> EditCart(EditCartRequest request)
+        public async Task<IActionResult> EditCart(int productId, int quantity)
         {
-            var UpdateCart = await _cart.EditToCart(request);
+
+            var UpdateCart = await _cart.EditToCart(productId, quantity,1);
             if (UpdateCart.IsSuccess == true)
             {
                 _notyfService.Success(UpdateCart.Message);

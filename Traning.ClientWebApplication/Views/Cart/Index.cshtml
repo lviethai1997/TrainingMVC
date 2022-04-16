@@ -1,5 +1,6 @@
 ﻿@using Training.Data.SystemConfig
 @using Training.ViewModel.Common
+@using Newtonsoft.Json;
 @model PageResult<Training.ViewModel.Catalog.CartModel.ViewCartRequest>
 
 @{
@@ -7,6 +8,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     decimal subtotal = 0;
 }
+
+
 
 <div class="cart-title-area">
     <div class="container">
@@ -55,7 +58,7 @@
                             </thead>
                             <tbody>
                                 @{
-                                    if (Model.Items.Any())
+                                    if (Model.Items != null)
                                     {
                                         foreach (var item in Model.Items)
                                         {
@@ -65,26 +68,21 @@
                                             <tr>
                                                 <td class="product-thumbnail"><a href="@urlProductDetail"><img src="@(SystemString.AdminUrl+item.Images)" alt="" /></a></td>
                                                 <td class="product-name"><a href="@urlProductDetail">@item.productName</a></td>
-                                                <td class="product-price"><span class="amount">@item.priceProduct</span></td>
-                                                <td class="product-quantity"><input type="number" value="@item.quantityProduct" /></td>
-                                                <td class="product-subtotal">@((item.priceProduct*item.quantityProduct).ToString("N0"))</td>
+                                                <td class="product-price"><span id="@($"price-{item.productId}")" class="amount">@item.priceProduct</span></td>
+                                                <td class="product-quantity"><input class="dataCart" type="number" data-id="@item.productId" value="@item.quantityProduct" /></td>
+                                                <td class="product-subtotal"><p id="@($"subtotal-{@item.productId}")">@((item.priceProduct*item.quantityProduct).ToString("N0"))</p></td>
                                                 <td class="product-remove"><a href="/delProductInCart/@item.productId"><i class="fa fa-times"></i></a></td>
                                             </tr>
+
                                         }
                                     }
-                                    else
-                                    {
-                                        <h3>Không có sản phẩm nào</h3>
-                                    }
                                 }
-
                             </tbody>
                         </table>
                     </div>
                     <div class="row">
                         <div class="col-md-8 col-sm-7">
                             <div class="buttons-cart">
-                                <input type="submit" value="Cập nhật giỏ hàng" />
                                 <a href="#">Tiếp tục mua sắm</a>
                             </div>
                             <div class="coupon">
@@ -137,3 +135,33 @@
     </div>
 </div>
 
+@section Scripts{
+<script>
+     $(".dataCart").keyup(function(event){
+         event.preventDefault();
+     let productId = $(".product-quantity").find(this).attr("data-id");
+    let quantity = $(".product-quantity").find(this).val();
+    let subtotal = $("#subtotal-"+productId).html();
+    let price = $("#price-"+productId).html();
+
+
+
+    console.log(quantity)
+
+     if(productId >0 && quantity > 0){
+         $("#subtotal-"+productId).html((parseFloat(quantity)*parseFloat(price)).toLocaleString())
+
+          $.ajax({
+         method:"POST",
+         url: "/updateCart",
+         data : {
+             productId :productId,
+             quantity:quantity
+         },
+     })
+     }
+
+     })
+
+</script>
+}

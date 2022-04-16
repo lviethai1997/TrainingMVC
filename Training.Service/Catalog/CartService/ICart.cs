@@ -8,7 +8,7 @@ namespace Training.Service.Catalog.CartService
     {
         Task<PageActionResult> AddToCart(AddCartRequest request);
 
-        Task<PageActionResult> EditToCart(EditCartRequest request);
+        Task<PageActionResult> EditToCart(int productId, int quantity,int userId);
 
         Task<PageResult<ViewCartRequest>> GetCarts(int userId);
 

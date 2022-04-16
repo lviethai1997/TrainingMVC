@@ -57,29 +57,31 @@
                         <div class="cart-total">
                             <ul>
                                 <li>
-                                    <a href="/gio-hang"><span class="cart-icon"><i class="fa fa-shopping-cart"></i></span> <span class="cart-no">@Enumerable.Count(ViewBag.CartItem.Items)</span></a>
+                                    <a href="/gio-hang"><span class="cart-icon"><i class="fa fa-shopping-cart"></i></span> <span class="cart-no">@(ViewBag.CartItem.Items != null ?Enumerable.Count(ViewBag.CartItem.Items):"0")</span></a>
                                     <div class="mini-cart-content">
                                         @{
                                             decimal subtotal = 0;
-
-                                            foreach (var item in ViewBag.CartItem.Items)
+                                            if (ViewBag.CartItem.Items != null)
                                             {
-                                                subtotal += item.priceProduct;
-                                                string urlCart = "/Cart/AddtoCart?productId=" + item.productId + "&quantity=1";
-                                                string urlProductDetail = "/chi-tiet-san-pham/" + item.productName + "/" + item.productId;
+                                                foreach (var item in ViewBag.CartItem.Items)
+                                                {
+                                                    subtotal += item.priceProduct;
+                                                    string urlCart = "/Cart/AddtoCart?productId=" + item.productId + "&quantity=1";
+                                                    string urlProductDetail = "/chi-tiet-san-pham/" + item.productName + "/" + item.productId;
 
-                                                <div class="cart-img-details">
-                                                    <div class="cart-img-photo">
-                                                        <a href="@urlProductDetail"><img src="@(SystemString.AdminUrl+item.Images)" alt="" /></a>
-                                                        <span class="quantity">@item.quantityProduct</span>
+                                                    <div class="cart-img-details">
+                                                        <div class="cart-img-photo">
+                                                            <a href="@urlProductDetail"><img src="@(SystemString.AdminUrl+item.Images)" alt="" /></a>
+                                                            <span class="quantity">@item.quantityProduct</span>
+                                                        </div>
+                                                        <div class="cart-img-contaent">
+                                                            <a href="#"><h4>@item.productName</h4></a>
+                                                            <span>@item.priceProduct.ToString("N0")</span>
+                                                        </div>
+                                                        <div class="pro-del"><a href="/delProductInCart/@item.productId"><i class="fa fa-times-circle"></i></a></div>
                                                     </div>
-                                                    <div class="cart-img-contaent">
-                                                        <a href="#"><h4>@item.productName</h4></a>
-                                                        <span>@item.priceProduct.ToString("N0")</span>
-                                                    </div>
-                                                    <div class="pro-del"><a href="/delProductInCart/@item.productId"><i class="fa fa-times-circle"></i></a></div>
-                                                </div>
-                                                <div class="clear"></div>
+                                                    <div class="clear"></div>
+                                                }
                                             }
                                         }
                                         <p class="total">Tổng tiền: <span class="amount">@subtotal.ToString("N0")</span></p>
