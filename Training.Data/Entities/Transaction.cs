@@ -12,7 +12,6 @@ namespace Training.Data.Entities
         public int Status { get; set; }
         public DateTime Created_time { get; set; }
         public DateTime Updated_time { get; set; }
-
         public User User { get; set; }
         public Order Order { get; set; }
     }

@@ -26,6 +26,29 @@ namespace Traning.ClientWebApplication.Controllers
             return View(carts);
         }
 
+        [Route("checkout", Name = "checkout")]
+        public async Task<IActionResult> Checkout()
+        {
+            var getInfor = await _cart.GetInfoUser(1);
+            return View(getInfor);
+        }
+
+        [Route("checkout", Name = "checkout")]
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckOutRequest request)
+        {
+            var ConfirmOrder = await _cart.CheckOut(request);
+            if (ConfirmOrder.IsSuccess == true)
+            {
+                _notyfService.Success(ConfirmOrder.Message);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _notyfService.Error(ConfirmOrder.Message);
+                return RedirectToAction("Index");
+            }
+        }
 
         public async Task<IActionResult> AddtoCart([FromQuery] int productId, [FromQuery] int quantity)
         {
@@ -55,7 +78,7 @@ namespace Traning.ClientWebApplication.Controllers
         public async Task<IActionResult> EditCart(int productId, int quantity)
         {
 
-            var UpdateCart = await _cart.EditToCart(productId, quantity,1);
+            var UpdateCart = await _cart.EditToCart(productId, quantity, 1);
             if (UpdateCart.IsSuccess == true)
             {
                 _notyfService.Success(UpdateCart.Message);

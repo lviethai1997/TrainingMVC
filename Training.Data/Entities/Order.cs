@@ -10,7 +10,6 @@ namespace Training.Data.Entities
     {
         public int Id { get; set; }
 
-        public int? CustommerId { get; set; }
 
         public string CustommerName { get; set; }
 

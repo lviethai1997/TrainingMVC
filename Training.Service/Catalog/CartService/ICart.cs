@@ -13,5 +13,9 @@ namespace Training.Service.Catalog.CartService
         Task<PageResult<ViewCartRequest>> GetCarts(int userId);
 
         Task<PageActionResult> DeleteProductInCart(int productId, int userId);
+
+        Task<PageActionResult> CheckOut(CheckOutRequest request);
+
+        Task<CheckOutRequest> GetInfoUser(int UserId);
     }
 }

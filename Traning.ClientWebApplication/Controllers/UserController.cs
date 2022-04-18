@@ -5,19 +5,10 @@ namespace Traning.ClientWebApplication.Controllers
 {
     public class UserController : Controller
     {
-        public ActionResult Login()
-        {
-            return View();
-        }
-
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Register()
+        public ActionResult Login(string Email, string Password)
         {
             return View();
         }

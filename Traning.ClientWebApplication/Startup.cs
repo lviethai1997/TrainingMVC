@@ -32,8 +32,7 @@ namespace Traning.ClientWebApplication
             services.AddControllersWithViews();
             services.AddNotyf(config => { config.DurationInSeconds = 3; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
             services.AddRazorPages();
-            services.AddDbContext<TrainingDbContext>(options =>
-                        options.UseSqlServer(Training.Data.SystemConfig.SystemString.SQLconnection));
+            services.AddDbContext<TrainingDbContext>(options => options.UseSqlServer(Training.Data.SystemConfig.SystemString.SQLconnection));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserService, UserService>();
