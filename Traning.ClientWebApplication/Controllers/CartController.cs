@@ -1,10 +1,8 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Training.Service.Catalog.CartService;
 using Training.ViewModel.Catalog.CartModel;
-using Newtonsoft.Json;
 
 namespace Traning.ClientWebApplication.Controllers
 {
@@ -22,14 +20,14 @@ namespace Traning.ClientWebApplication.Controllers
         [Route("gio-hang", Name = "GioHang")]
         public async Task<IActionResult> Index()
         {
-            var carts = await _cart.GetCarts(1);
+            var carts = await _cart.GetCarts(4);
             return View(carts);
         }
 
         [Route("checkout", Name = "checkout")]
         public async Task<IActionResult> Checkout()
         {
-            var getInfor = await _cart.GetInfoUser(1);
+            var getInfor = await _cart.GetInfoUser(4);
             return View(getInfor);
         }
 
@@ -37,6 +35,7 @@ namespace Traning.ClientWebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckOutRequest request)
         {
+            request.UserId = 4;
             var ConfirmOrder = await _cart.CheckOut(request);
             if (ConfirmOrder.IsSuccess == true)
             {
@@ -50,13 +49,13 @@ namespace Traning.ClientWebApplication.Controllers
             }
         }
 
-        public async Task<IActionResult> AddtoCart([FromQuery] int productId, [FromQuery] int quantity)
+        public async Task<IActionResult> AddtoCart(int productId, int quantity)
         {
             var request = new AddCartRequest()
             {
                 productId = productId,
                 productQuantity = quantity,
-                userId = 1
+                userId = 4
             };
 
             var addCart = await _cart.AddToCart(request);
@@ -77,8 +76,7 @@ namespace Traning.ClientWebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> EditCart(int productId, int quantity)
         {
-
-            var UpdateCart = await _cart.EditToCart(productId, quantity, 1);
+            var UpdateCart = await _cart.EditToCart(productId, quantity, 4);
             if (UpdateCart.IsSuccess == true)
             {
                 _notyfService.Success(UpdateCart.Message);
@@ -94,7 +92,7 @@ namespace Traning.ClientWebApplication.Controllers
         [Route("/delProductInCart/{productId}")]
         public async Task<IActionResult> DeleteCart(int productId)
         {
-            var delProductInCart = await _cart.DeleteProductInCart(productId, 1);
+            var delProductInCart = await _cart.DeleteProductInCart(productId, 4);
             if (delProductInCart.IsSuccess == true)
             {
                 _notyfService.Success(delProductInCart.Message);
@@ -105,7 +103,6 @@ namespace Traning.ClientWebApplication.Controllers
                 _notyfService.Error(delProductInCart.Message);
                 return RedirectToAction("Index");
             }
-
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Training.Service.Catalog.CartService
                 UserId = request.userId,
                 ProductId = request.productId,
                 QuantityProduct = request.productQuantity,
-                PriceProduct = 0,
+
                 Created_time = DateTime.Now,
                 Updated_time = DateTime.Now
             };
@@ -105,8 +105,7 @@ namespace Training.Service.Catalog.CartService
                 }
             }
 
-            var findUserCheckOut = await _context.Users.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
-
+            var findUserCheckOut = await _context.Users.Where(x => x.Id == request.UserId).FirstOrDefaultAsync();
 
             var CreateOder = await _context.Orders.AddAsync(new Order()
             {
@@ -122,7 +121,8 @@ namespace Training.Service.Catalog.CartService
 
             await _context.SaveChangesAsync();
 
-            var findCart = from cart in _context.Carts join
+            var findCart = from cart in _context.Carts
+                           join
                            product in _context.Products
                            on cart.ProductId equals product.Id
                            where cart.UserId == findUserCheckOut.Id && product.Status == 0
@@ -130,42 +130,30 @@ namespace Training.Service.Catalog.CartService
 
             foreach (var item in findCart)
             {
-                if (item.product.Sale > 0)
+                var CreateOrderDetail = await _context.OrderDetails.AddAsync(new OrderDetail()
                 {
-                    item.cart.PriceProduct = item.product.Price - (item.product.Price * (item.product.Sale / 100));
-                }
-                else
-                {
-                    item.cart.PriceProduct = item.product.Price;
-                }
+                    OrderId = CreateOder.Entity.Id,
+                    ProductId = item.cart.ProductId,
+                    QuantityProduct = item.cart.QuantityProduct,
+                    PriceProduct = item.product.Price,
+                    Sale = item.product.Sale,
+                    PriceSaleProduct = item.product.Price - (item.product.Price * (item.product.Sale / 100))
+                });
             }
-
             await _context.SaveChangesAsync();
 
             var CreateTrans = await _context.Transactions.AddAsync(new Transaction()
             {
                 OrderId = CreateOder.Entity.Id,
                 UserId = findUserCheckOut == null ? 0 : findUserCheckOut.Id,
-                TotalAmount = findCart.Sum(x => x.cart.PriceProduct),
+                TotalAmount = _context.OrderDetails.Where(x => x.OrderId == CreateOder.Entity.Id).Sum(x => x.PriceSaleProduct),
                 TotalQuantity = findCart.Sum(x => x.cart.QuantityProduct),
                 Status = 0,
                 Created_time = DateTime.Now,
                 Updated_time = DateTime.Now,
             });
 
-            foreach (var order in findCart)
-            {
-                var CreateOrderDetail = await _context.OrderDetails.AddAsync(new OrderDetail()
-                {
-                    OrderId = CreateOder.Entity.Id,
-                    ProductId = order.cart.ProductId,
-                    QuantityProduct = order.cart.QuantityProduct,
-                    PriceProduct = order.cart.PriceProduct,
-                });
-            }
-
             var result = await _context.SaveChangesAsync();
-
 
             if (result > 0)
             {
@@ -175,7 +163,6 @@ namespace Training.Service.Catalog.CartService
             {
                 return new PageActionResult { IsSuccess = false, Message = "Có lỗi đã xảy ra, Vui lòng thử lại" };
             }
-
         }
 
         public async Task<PageActionResult> DeleteProductInCart(int productId, int userId)
@@ -251,7 +238,8 @@ namespace Training.Service.Catalog.CartService
                 productName = x.product.Name,
                 productId = x.product.Id,
                 quantityProduct = x.cart.QuantityProduct,
-                priceProduct = x.product.Sale > 0 ? x.product.Price - (x.product.Price * (x.product.Sale / 100)) : x.product.Price
+                priceProduct = x.product.Price,
+                priceSaleProduct = x.product.Price - (x.product.Price * (x.product.Sale / 100))
             }).ToListAsync();
 
             return new PageResult<ViewCartRequest>
@@ -284,6 +272,7 @@ namespace Training.Service.Catalog.CartService
                 productId = x.product.Id,
                 quantityProduct = x.cart.QuantityProduct,
                 priceProduct = x.product.Price,
+                priceSaleProduct = x.product.Price - (x.product.Price * (x.product.Sale / 100)),
             }).ToListAsync();
 
             var inforUser = new CheckOutRequest()
@@ -296,7 +285,6 @@ namespace Training.Service.Catalog.CartService
             };
 
             return inforUser;
-
         }
     }
 }

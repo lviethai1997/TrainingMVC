@@ -76,7 +76,18 @@
                                                         </div>
                                                         <div class="cart-img-contaent">
                                                             <a href="#"><h4>@item.productName</h4></a>
-                                                            <span>@item.priceProduct.ToString("N0")</span>
+                                                            @{
+                                                                if (item.priceProduct != item.priceSaleProduct)
+                                                                {
+                                                                    <span class="old-price"><del>@item.priceProduct.ToString("N0")</del></span>
+                                                                    <span class="pro-price">@item.priceSaleProduct.ToString("N0")</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="pro-price">@item.priceSaleProduct.ToString("N0")</span>
+                                                                }
+                                                            }
+
                                                         </div>
                                                         <div class="pro-del"><a href="/delProductInCart/@item.productId"><i class="fa fa-times-circle"></i></a></div>
                                                     </div>

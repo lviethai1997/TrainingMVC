@@ -1,0 +1,122 @@
+﻿@model Training.ViewModel.Catalog.OrderViewModel.OrderDetailView
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h2>Chi tiết đơn hàng - @Model.OrderId</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustommerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CustommerName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CustommerPhone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CustommerPhone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CustommerAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CustommerAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CustommerEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CustommerEmail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalQty)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalQty)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </dt>
+        <dd>
+            @Model.TotalAmount.ToString("N0")
+        </dd>
+    </dl>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="panel-title">Danh sách đơn hàng</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Mã sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá cả</th>
+                                <th>Số lượng </th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ListProducts)
+                            {
+                                string price = item.priceProduct.ToString("N0");
+                                string priceSale = item.priceSaleProduct.ToString("N0");
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.productId)
+                                    </td>
+                                    <td>
+                                        <img style="width:120px;height:120px" src="@item.Images">
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.productName)
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            @{
+                                                if (price != priceSale)
+                                                {
+                                                    <li>Giá Bán:<del>@Html.DisplayFor(modelItem => price)</del> </li>
+                                                    <li>Giá Khuyến mãi: @Html.DisplayFor(modelItem => priceSale)</li>
+                                                }
+                                                else
+                                                {
+                                                    <li>Giá Bán:@Html.DisplayFor(modelItem => price) </li>
+                                                }
+                                            }
+
+                                            <li>% Khuyến mãi: @Html.DisplayFor(modelItem => item.Sale)</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.quantityProduct)
+                                    </td>
+                                    <td>
+                                        @((item.priceSaleProduct*item.quantityProduct).ToString("N0"))
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

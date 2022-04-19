@@ -62,15 +62,15 @@
                                     {
                                         foreach (var item in Model.Items)
                                         {
-                                            subtotal += item.priceProduct * item.quantityProduct;
+                                            subtotal += item.priceSaleProduct * item.quantityProduct;
 
                                             string urlProductDetail = "/chi-tiet-san-pham/" + item.productName + "/" + item.productId;
                                             <tr>
                                                 <td class="product-thumbnail"><a href="@urlProductDetail"><img src="@(SystemString.AdminUrl+item.Images)" alt="" /></a></td>
                                                 <td class="product-name"><a href="@urlProductDetail">@item.productName</a></td>
-                                                <td class="product-price"><span id="@($"price-{item.productId}")" class="amount">@item.priceProduct</span></td>
+                                                <td class="product-price"><span id="@($"price-{item.productId}")" class="amount">@item.priceSaleProduct.ToString("N0")</span></td>
                                                 <td class="product-quantity"><input class="dataCart" type="number" data-id="@item.productId" value="@item.quantityProduct" /></td>
-                                                <td class="product-subtotal"><p id="@($"subtotal-{@item.productId}")">@((item.priceProduct*item.quantityProduct).ToString("N0"))</p></td>
+                                                <td class="product-subtotal"><p id="@($"subtotal-{@item.productId}")">@((item.priceSaleProduct*item.quantityProduct).ToString("N0"))</p></td>
                                                 <td class="product-remove"><a href="/delProductInCart/@item.productId"><i class="fa fa-times"></i></a></td>
                                             </tr>
 

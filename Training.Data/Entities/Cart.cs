@@ -8,7 +8,7 @@ namespace Training.Data.Entities
         public int UserId { get; set; }
         public int ProductId { get; set; }
         public int QuantityProduct { get; set; }
-        public decimal PriceProduct { get; set; }
+ 
         public DateTime Created_time { get; set; }
         public DateTime Updated_time { get; set; }
 

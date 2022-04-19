@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Training.Data.EF;
 
 namespace Training.Data.Migrations
 {
     [DbContext(typeof(TrainingDbContext))]
-    partial class TrainingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220419004030_EditDatabase")]
+    partial class EditDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 841, DateTimeKind.Local).AddTicks(5504));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 421, DateTimeKind.Local).AddTicks(2992));
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -42,7 +44,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Updated_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 846, DateTimeKind.Local).AddTicks(7972));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 427, DateTimeKind.Local).AddTicks(309));
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -73,7 +75,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 852, DateTimeKind.Local).AddTicks(2505));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 432, DateTimeKind.Local).AddTicks(8217));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -108,7 +110,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 853, DateTimeKind.Local).AddTicks(3333));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 434, DateTimeKind.Local).AddTicks(256));
 
                     b.Property<string>("CustommerAdress")
                         .IsRequired()
@@ -197,7 +199,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 859, DateTimeKind.Local).AddTicks(6382));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 440, DateTimeKind.Local).AddTicks(9509));
 
                     b.Property<string>("ImageBanner")
                         .IsRequired()
@@ -220,7 +222,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Updated_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 859, DateTimeKind.Local).AddTicks(6640));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 440, DateTimeKind.Local).AddTicks(9781));
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -246,7 +248,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 858, DateTimeKind.Local).AddTicks(3791));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 439, DateTimeKind.Local).AddTicks(5911));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -266,7 +268,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Updated_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 858, DateTimeKind.Local).AddTicks(4064));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 439, DateTimeKind.Local).AddTicks(6163));
 
                     b.HasKey("Id");
 
@@ -293,7 +295,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 863, DateTimeKind.Local).AddTicks(2777));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 444, DateTimeKind.Local).AddTicks(9148));
 
                     b.Property<int>("Hot")
                         .ValueGeneratedOnAdd()
@@ -336,7 +338,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Updated_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 863, DateTimeKind.Local).AddTicks(3065));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 444, DateTimeKind.Local).AddTicks(9411));
 
                     b.Property<int?>("ViewCount")
                         .ValueGeneratedOnAdd()
@@ -366,7 +368,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 861, DateTimeKind.Local).AddTicks(2645));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 442, DateTimeKind.Local).AddTicks(7301));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -456,7 +458,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Created_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 865, DateTimeKind.Local).AddTicks(7305));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 447, DateTimeKind.Local).AddTicks(5375));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -470,9 +472,9 @@ namespace Training.Data.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(2147483647)
+                        .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -492,7 +494,7 @@ namespace Training.Data.Migrations
                     b.Property<DateTime>("Updated_time")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 51, 21, 865, DateTimeKind.Local).AddTicks(7532));
+                        .HasDefaultValue(new DateTime(2022, 4, 19, 7, 40, 30, 447, DateTimeKind.Local).AddTicks(5614));
 
                     b.Property<string>("Username")
                         .IsRequired()

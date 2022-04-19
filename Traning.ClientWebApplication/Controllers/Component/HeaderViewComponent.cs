@@ -19,7 +19,7 @@ namespace Traning.ClientWebApplication.Controllers.Component
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var productCategories = await _productCategory.GetCateClient();
-            ViewBag.CartItem = await _cart.GetCarts(1);
+            ViewBag.CartItem = await _cart.GetCarts(4);
 
             return View(productCategories);
         }

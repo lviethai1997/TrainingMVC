@@ -1,0 +1,97 @@
+﻿@using Training.ViewModel.Common
+@model PageResult<Training.ViewModel.Catalog.OrderViewModel.ListOrderView>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">Lọc đơn hàng</h3>
+    </div>
+    <div class="panel-body">
+        <!-- Inline Form  -->
+        <!--===================================================-->
+        <form asp-action="Index" class="form-inline" asp-controller="Order" method="get">
+            <div class="form-group">
+                <input class="form-control" placeholder="Nhập từ khóa tìm kiếm" value="@ViewBag.keyword" name="keyword" type="text" />
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </div>
+            @* <div class="form-group">
+                <label>Chọn danh mục:</label>
+                <select name="idCate" onchange="this.form.submit()" class="form-control" asp-items="@ViewBag.listProCat">
+                <option>Tất cả</option>
+                </select>
+                </div>*@
+        </form>
+        <!--===================================================-->
+        <!-- End Inline Form  -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="panel-title">Danh sách đơn hàng</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Tên khách hàng</th>
+                                <th>Số điện thoại</th>
+                                <th>Địa chỉ Email</th>
+                                <th>Số lượng Sản phẩm</th>
+                                <th>Thành tiền</th>
+                                <th>Ngày tạo đơn</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrderId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustommerName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustommerPhone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CustommerEmail)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalQty)
+                                    </td>
+                                    @{
+                                        string TotalAmount = item.TotalAmount.ToString("N0");
+                                    }
+                                    <td>
+                                        @Html.DisplayFor(modelItem => TotalAmount)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.create_time)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Chi tiết đơn", "Details", new {  id=item.OrderId  },new{@class="btn btn-primary"})
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @await Component.InvokeAsync("Pager",Model)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

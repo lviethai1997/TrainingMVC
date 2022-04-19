@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Training.Data.EF;
+using Training.Service.Catalog.OrderService;
 using Training.Service.Catalog.ProductCategoryService;
 using Training.Service.Catalog.ProductService;
 using Training.Service.Catalog.UserService;
@@ -44,6 +45,7 @@ namespace Training.AdminWebApplication
             services.AddTransient<IProduct, ProductService>();
             services.AddTransient<IProductCategory, ProductCategoryService>();
             services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<IOrder, OrderService>();
 
             IMvcBuilder build = services.AddRazorPages();
             build.AddRazorRuntimeCompilation();

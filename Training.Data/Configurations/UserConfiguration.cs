@@ -18,7 +18,7 @@ namespace Training.Data.Configurations
             builder.Property(x => x.Phone).IsRequired().HasMaxLength(15);
             builder.Property(x => x.Address).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Username).IsRequired().IsUnicode(false).HasMaxLength(30);
-            builder.Property(x => x.Password).IsRequired().IsUnicode(false).HasMaxLength(30);
+            builder.Property(x => x.Password).IsRequired().IsUnicode(false).HasMaxLength(int.MaxValue);
             builder.Property(x => x.Role).IsRequired().HasDefaultValue(0);
             builder.Property(x => x.Status).IsRequired().HasDefaultValue(0);
             builder.Property(x => x.Created_time).HasDefaultValue(DateTime.Now);

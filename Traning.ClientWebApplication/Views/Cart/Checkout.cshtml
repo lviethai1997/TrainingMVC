@@ -136,13 +136,13 @@
                                         decimal subtotal = 0;
                                         foreach (var item in Model.carts)
                                         {
-                                            subtotal += item.priceProduct;
+                                            subtotal += item.priceSaleProduct;
                                             <tr class="cart_item">
                                                 <td class="product-name">
                                                     @item.productName <strong class="product-quantity"> × @item.quantityProduct</strong>
                                                 </td>
                                                 <td class="product-total">
-                                                    <span class="amount">@item.priceProduct</span>
+                                                    <span class="amount">@item.priceSaleProduct.ToString("N0")</span>
                                                 </td>
                                             </tr>
                                         }
