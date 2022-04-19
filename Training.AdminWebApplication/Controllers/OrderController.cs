@@ -1,8 +1,10 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Training.Service.Catalog.OrderService;
+using Training.Service.Common;
 using Training.ViewModel.Common;
 
 namespace Training.AdminWebApplication.Controllers
@@ -38,64 +40,24 @@ namespace Training.AdminWebApplication.Controllers
             return View(result);
         }
 
-        // GET: OrderController/Create
-        public ActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> PrintExcel(int id)
         {
-            return View();
-        }
+            string fileName = string.Concat("Don_hang_" + id + "_" + DateTime.Now.ToString("yyyyMMddHHss") + ".xlsx");
+            string folderReport = System.AppDomain.CurrentDomain.BaseDirectory + @"Excels\";
+            if (!Directory.Exists(folderReport))
+            {
+                Directory.CreateDirectory(folderReport);
+            }
+            string fullpath = Path.Combine(folderReport, fileName);
 
-        // POST: OrderController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var data = await _order.OrderDetail(id);
+                var excel = await PrintBillExcel.ExportExcel(data, fullpath);
+                return File(excel, "application/vnd.ms-excel", fileName);
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: OrderController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: OrderController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: OrderController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            catch (Exception)
             {
                 return View();
             }

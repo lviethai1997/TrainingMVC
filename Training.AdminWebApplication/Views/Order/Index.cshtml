@@ -84,6 +84,7 @@
                                     </td>
                                     <td>
                                         @Html.ActionLink("Chi tiết đơn", "Details", new {  id=item.OrderId  },new{@class="btn btn-primary"})
+                                        @Html.ActionLink("In hóa đơn", "PrintExcel", new {  id=item.OrderId  },new{@class="btn btn-primary"})
                                     </td>
                                 </tr>
                             }

@@ -11,6 +11,9 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="EPPlus" Version="6.0.3" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Training.Data\Training.Data.csproj" />
     <ProjectReference Include="..\Training.ViewModel\Training.ViewModel.csproj" />
