@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Training.Service.Catalog.OrderService;
 using Training.Service.Common;
@@ -45,6 +47,12 @@ namespace Training.AdminWebApplication.Controllers
         {
             string fileName = string.Concat("Don_hang_" + id + "_" + DateTime.Now.ToString("yyyyMMddHHss") + ".xlsx");
             string folderReport = System.AppDomain.CurrentDomain.BaseDirectory + @"Excels\";
+
+            //set resource file(right click to file and change buid action to 'Embedded resource' ) and conver it to stream
+            string resourceName = Assembly.GetExecutingAssembly().GetManifestResourceNames()
+                .Single(str => str.EndsWith("av6.png"));
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+
             if (!Directory.Exists(folderReport))
             {
                 Directory.CreateDirectory(folderReport);
@@ -54,7 +62,7 @@ namespace Training.AdminWebApplication.Controllers
             try
             {
                 var data = await _order.OrderDetail(id);
-                var excel = await PrintBillExcel.ExportExcel(data, fullpath);
+                var excel = await PrintBillExcel.ExportExcel(data, fullpath, stream);
                 return File(excel, "application/vnd.ms-excel", fileName);
             }
             catch (Exception)

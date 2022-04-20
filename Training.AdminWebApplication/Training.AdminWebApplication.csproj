@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\img\av6.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Order\Index.cshtml~RF5559599.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\img\av6.png" />
   </ItemGroup>
 
   <ItemGroup>
