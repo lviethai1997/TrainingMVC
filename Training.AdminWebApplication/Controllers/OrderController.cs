@@ -1,6 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -43,7 +44,23 @@ namespace Training.AdminWebApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PrintExcel(int id)
+        [Route("exportExcel")]
+        public async Task<IActionResult> PrintExcel()
+        {
+            try
+            {
+                byte[] bytes = await Models.TempData.ExcelByte;
+                return File(bytes, "application/vnd.ms-excel", Models.TempData.fileName);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [Route("reviewExcel", Name = "reviewExcel")]
+        public async Task<JsonResult> reviewExcel(int id)
         {
             string fileName = string.Concat("Don_hang_" + id + "_" + DateTime.Now.ToString("yyyyMMddHHss") + ".xlsx");
             string folderReport = System.AppDomain.CurrentDomain.BaseDirectory + @"Excels\";
@@ -52,23 +69,30 @@ namespace Training.AdminWebApplication.Controllers
             string resourceName = Assembly.GetExecutingAssembly().GetManifestResourceNames()
                 .Single(str => str.EndsWith("av6.png"));
             using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
-
+            ////////////////////////
             if (!Directory.Exists(folderReport))
             {
                 Directory.CreateDirectory(folderReport);
             }
             string fullpath = Path.Combine(folderReport, fileName);
 
-            try
-            {
-                var data = await _order.OrderDetail(id);
-                var excel = await PrintBillExcel.ExportExcel(data, fullpath, stream);
-                return File(excel, "application/vnd.ms-excel", fileName);
-            }
-            catch (Exception)
-            {
-                return View();
-            }
+            //DirectoryInfo d = new DirectoryInfo(folderReport);
+            //FileInfo[] Files = d.GetFiles("*.xlsx");
+            //foreach (FileInfo file in Files)
+            //{
+            //    file.Delete();
+            //}
+
+            var data = await _order.OrderDetail(id);
+            var excel = await PrintBillExcel.ExportExcel(data, fullpath, stream);
+
+            Models.TempData.ExcelByte = excel[0];
+            Models.TempData.fileName = fileName;
+
+            var obj = new List<object>();
+            obj.Add(new { html = excel[1], css = excel[2] });
+
+            return Json(obj);
         }
     }
 }

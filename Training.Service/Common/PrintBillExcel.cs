@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Training.ViewModel.Catalog.OrderViewModel;
@@ -8,9 +9,14 @@ namespace Training.Service.Common
 {
     public static class PrintBillExcel
     {
-        public static async Task<byte[]> ExportExcel(OrderDetailView dataview, string filepath, Stream pathRs)
+        public static string Css { get; set; }
+
+        public static string Html { get; set; }
+
+        public static async Task<List<object>> ExportExcel(OrderDetailView dataview, string filepath, Stream pathRs)
         {
             Task<byte[]> exportExcelTask = null;
+            var list = new List<object>();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(new FileInfo(filepath)))
             {
@@ -49,12 +55,22 @@ namespace Training.Service.Common
                 var table = ws.Tables.GetFromRange(tableRange);
                 table.ShowRowStripes = table.ShowRowStripes;
                 ws.Cells.AutoFitColumns();
+               //await package.SaveAsync();
+                string lastAddress = ws.Dimension.Address;
 
-                await package.SaveAsync();
-
+                var exporter = ws.Cells[lastAddress].CreateHtmlExporter();
+               //exporter.Settings.AdditionalTableClassNames.Add("epplus-table ts-dark1 ts-dark1-header ts-dark1-row-stripes table table-borderless dataTable no-footer");
+                exporter.Settings.Minify = false;
+                Css = await exporter.GetCssStringAsync();
+                Html = await exporter.GetHtmlStringAsync();
                 exportExcelTask = package.GetAsByteArrayAsync();
+
+                list.Add(exportExcelTask);
+                list.Add(Html);
+                list.Add(Css);
             }
-            return await exportExcelTask;
+
+            return list;
         }
     }
 }
