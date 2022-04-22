@@ -84,7 +84,7 @@
                                     </td>
                                     <td>
                                         @Html.ActionLink("Chi tiết đơn", "Details", new {  id=item.OrderId  },new{@class="btn btn-primary"})
-                                       
+
                                         <button data-target="#demo-lg-modal" data-id="@item.OrderId" data-toggle="modal" class="btn btn-warning reviewExcel">Xem trước Hóa đơn</button>
                                     </td>
                                 </tr>
@@ -97,14 +97,16 @@
         </div>
     </div>
 </div>
+
 <div id="demo-lg-modal" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg" style="width:70%;height:70%">
+    <div class="modal-dialog modal-lg" style="width:70%;">
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal"><span>×</span></button>
-               
-                <h4 class="modal-title" id="myLargeModalLabel">Xem trước hóa đơn
-                     <a href="/exportExcel" class="btn btn-success">Xuất file Excel</a>
+
+                <h4 class="modal-title" id="myLargeModalLabel">
+                    Xem trước hóa đơn
+                    <a href="/exportExcel" class="btn btn-success">Xuất Excel</a>
                 </h4>
             </div>
             <div id="childModel" class="modal-body">
@@ -122,7 +124,6 @@
         var width = $('#childModel').parent("div").width();
         var height = $('#childModel').parent("div").height();
 
-        console.log(id);
          $.ajax({
              method:"POST",
              url:"/reviewExcel",

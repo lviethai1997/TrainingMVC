@@ -52,14 +52,29 @@ namespace Training.Service.Common
                 ws.Cells[tableRange.Start.Row, tableRange.Start.Column, tableRange.End.Row, tableRange.End.Column].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 ws.Cells[tableRange.Start.Row, tableRange.Start.Column, tableRange.End.Row, tableRange.End.Column].Style.Border.Left.Style = ExcelBorderStyle.Thin;
 
+                var endRow = tableRange.End.Row + 1;
+                var StartCol = tableRange.Start.Column;
+                var endCol = tableRange.End.Column;
+                var rowTotal = ws.Cells[endRow, StartCol, endRow, endCol];
+                rowTotal.Merge = true;
+                rowTotal.Style.Font.Bold = true;
+                rowTotal.Style.Font.Size = 18;
+                rowTotal.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                rowTotal.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                rowTotal.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                rowTotal.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                rowTotal.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                rowTotal.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                rowTotal.Value = "Tổng tiền thanh toán: " + dataview.TotalAmount.ToString("N0");
+
                 var table = ws.Tables.GetFromRange(tableRange);
                 table.ShowRowStripes = table.ShowRowStripes;
                 ws.Cells.AutoFitColumns();
-               //await package.SaveAsync();
+                //await package.SaveAsync();
                 string lastAddress = ws.Dimension.Address;
 
                 var exporter = ws.Cells[lastAddress].CreateHtmlExporter();
-               //exporter.Settings.AdditionalTableClassNames.Add("epplus-table ts-dark1 ts-dark1-header ts-dark1-row-stripes table table-borderless dataTable no-footer");
+                //exporter.Settings.AdditionalTableClassNames.Add("epplus-table ts-dark1 ts-dark1-header ts-dark1-row-stripes table table-borderless dataTable no-footer");
                 exporter.Settings.Minify = false;
                 Css = await exporter.GetCssStringAsync();
                 Html = await exporter.GetHtmlStringAsync();
